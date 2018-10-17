@@ -4,7 +4,6 @@ const ViberBot = require('viber-bot').Bot;
 const BotEvents = require('viber-bot').Events;
 const TextMessage = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
-require('dotenv').config();
 
 const winston = require('winston');
 const toYAML = require('winston-console-formatter');
@@ -27,8 +26,9 @@ const say = (response, message) => {
 const logger = createLogger();
 
 if (!process.env.VIBER_PUBLIC_ACCOUNT_ACCESS_TOKEN_KEY) {
-  logger.debug('Could not find the Viber account access token key in your environment variable. Please make sure you followed readme guide.');
-  return;
+  logger.debug(`Could not find the Viber account access token key
+                in your environment variable. 
+                Please make sure you followed readme guide.`);
 }
 
 const bot = new ViberBot(logger, {
