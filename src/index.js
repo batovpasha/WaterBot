@@ -25,14 +25,8 @@ const say = (response, message) => {
 
 const logger = createLogger();
 
-if (!process.env.VIBER_PUBLIC_ACCOUNT_ACCESS_TOKEN_KEY) {
-  logger.debug(`Could not find the Viber account access token key
-                in your environment variable. 
-                Please make sure you followed readme guide.`);
-}
-
 const bot = new ViberBot(logger, {
-  authToken: process.env.VIBER_PUBLIC_ACCOUNT_ACCESS_TOKEN_KEY,
+  authToken: "489504805567d0e4-fc4db6f42aca801e-5071919865b61d88",
   name: "KryoBot",
   avatar: "" // use default avatar
 });
