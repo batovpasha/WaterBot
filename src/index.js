@@ -57,7 +57,7 @@ bot.onSubscribe(response => {
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   if (!(message instanceof TextMessage))
-    say(response, `Вибачте. Я розумію лише текстові повідомлення.`);
+    say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
 });
 
 bot.onTextMessage(/зробити замовлення/i, (message, response) => {
@@ -68,4 +68,5 @@ bot.onTextMessage(/./, (message, response) => {
   say(response, `Перепрошую, ви написали '${message.text}'?`);
 });
 
-http.createServer(bot.middleware()).listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
+http.createServer(bot.middleware())
+    .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
