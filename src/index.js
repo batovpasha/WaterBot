@@ -69,7 +69,7 @@ bot.onTextMessage(/зробити замовлення/i, (message, response) =>
 });
 
 bot.onTextMessage(/./, (message, response) => {
-  say(response, 'Використовуйте, будь-ласка, кнопки \u21903');
+  say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 });
 
 http.createServer(bot.middleware())
