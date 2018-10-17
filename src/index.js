@@ -28,25 +28,23 @@ const say = (response, message) => {
 const logger = createLogger();
 
 const bot = new ViberBot(logger, {
-  authToken: "489504805567d0e4-fc4db6f42aca801e-5071919865b61d88",
-  name: "KryoBot",
-  avatar: "" // use default avatar
+  authToken: '489504805567d0e4-fc4db6f42aca801e-5071919865b61d88',
+  name: 'KryoBot',
+  avatar: '' // use default avatar
 });
 
 const SAMPLE_KEYBOARD = {
-	"Type": "keyboard",
-	"Revision": 1,
-	"Buttons": [
+	'Type': 'keyboard',
+	'Revision': 1,
+	'Buttons': [
 		{
-			"Columns": 6,
-			"Rows": 1,
-			"BgColor": "#e6f5ff",
-			"BgMedia": "http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",
-			"BgMediaType": "picture",
-      "BgLoop": true,
-      "Text": "Замовити",
-			"ActionType": "reply",
-			"ActionBody": "Yes"
+			'Columns': 6,
+			'Rows': 1,
+			'BgColor': '#e6f5ff',
+      'BgLoop': true,
+      'Text': 'Замовити',
+			'ActionType': 'reply',
+			'ActionBody': 'зробити замовлення'
 		}
 	]
 };
