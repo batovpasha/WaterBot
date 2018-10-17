@@ -55,6 +55,10 @@ bot.onSubscribe(response => {
                  Я ${bot.name}! Я допоможу вам зробити замовлення.`);
 });
 
+bot.on(BotEvents.CONVERSATION_STARTED, (userProfile, isSubscribed, context, onFinish) => {
+  
+});
+
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   if (!(message instanceof TextMessage))
     say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
@@ -65,7 +69,7 @@ bot.onTextMessage(/зробити замовлення/i, (message, response) =>
 });
 
 bot.onTextMessage(/./, (message, response) => {
-  say(response, `Перепрошую, ви написали '${message.text}'?`);
+  say(response, 'Використовуйте, будь-ласка, кнопки \u21903');
 });
 
 http.createServer(bot.middleware())
