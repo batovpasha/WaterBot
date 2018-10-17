@@ -8,9 +8,12 @@ const KeyboardMessage = require('viber-bot').Message.Keyboard;
 const winston = require('winston');
 const toYAML = require('winston-console-formatter');
 
+const http = require('http');
+const port = process.env.PORT || 8080;
+
 const createLogger = () => {
   const logger = new winston.Logger({
-    level: "debug" // We recommend using the debug level for development
+    level: "debug"
   });
 
   logger.add(winston.transports.Console, toYAML.config());
@@ -30,7 +33,6 @@ const bot = new ViberBot(logger, {
   avatar: "" // use default avatar
 });
 
-
 const SAMPLE_KEYBOARD = {
 	"Type": "keyboard",
 	"Revision": 1,
@@ -41,8 +43,8 @@ const SAMPLE_KEYBOARD = {
 			"BgColor": "#e6f5ff",
 			"BgMedia": "http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",
 			"BgMediaType": "picture",
-            "BgLoop": true,
-            "Text": "Замовити",
+      "BgLoop": true,
+      "Text": "Замовити",
 			"ActionType": "reply",
 			"ActionBody": "Yes"
 		}
@@ -67,9 +69,5 @@ bot.onTextMessage(/зробити замовлення/i, (message, response) =>
 bot.onTextMessage(/./, (message, response) => {
   say(response, `Перепрошую, ви написали '${message.text}'?`);
 });
-
-
-const http = require('http');
-const port = process.env.PORT || 8080;
 
 http.createServer(bot.middleware()).listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
