@@ -7,7 +7,6 @@ const KeyboardMessage = require('viber-bot').Message.Keyboard;
 
 const winston = require('winston');
 const toYAML = require('winston-console-formatter');
-const ngrok = require('./get_public_url');
 
 const createLogger = () => {
   const logger = new winston.Logger({
@@ -70,22 +69,7 @@ bot.onTextMessage(/./, (message, response) => {
 });
 
 
-if (process.env.NOW_URL || process.env.HEROKU_URL) {
-  const http = require('http');
-  const port = process.env.PORT || 8080;
+const http = require('http');
+const port = process.env.PORT || 8080;
 
-  http.createServer(bot.middleware()).listen(port, () => bot.setWebhook(process.env.NOW_URL || process.env.HEROKU_URL));
-} else {
-    logger.debug('Could not find the now.sh/Heroku environment variables. Trying to use the local ngrok server.');
-    return ngrok.getPublicUrl().then(publicUrl => {
-      const http = require('http');
-      const port = process.env.PORT || 8080;
-
-      http.createServer(bot.middleware()).listen(port, () => bot.setWebhook(publicUrl));
-
-    }).catch(error => {
-        console.log('Can not connect to ngrok server. Is it running?');
-        console.error(error);
-        process.exit(1);
-    });
-}
+http.createServer(bot.middleware()).listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
