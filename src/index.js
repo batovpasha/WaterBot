@@ -64,12 +64,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
 });
 
-bot.onTextMessage(/зробити замовлення/i, (message, response) => {
-    response.send(new KeyboardMessage(SAMPLE_KEYBOARD));
-});
-
 bot.onTextMessage(/./, (message, response) => {
   say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
+
+  response.send(new KeyboardMessage(SAMPLE_KEYBOARD));
 });
 
 http.createServer(bot.middleware())
