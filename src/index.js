@@ -98,20 +98,20 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   if (!(message instanceof TextMessage))
     say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
 
-  say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
+  // say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 
-  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  // response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
   response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
-// bot.onTextMessage(/./, (message, response) => {
-//   say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
+bot.onTextMessage(/./, (message, response) => {
+  say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
 
-//   response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-// });
+  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+});
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
