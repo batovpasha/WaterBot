@@ -148,19 +148,19 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
   
-  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[1];
 
-  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[2];
 
-  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
