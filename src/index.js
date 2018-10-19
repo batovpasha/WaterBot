@@ -21,10 +21,6 @@ const createLogger = () => {
   return logger;
 };
 
-const say = (response, message) => {
-  response.send(new TextMessage(message));
-};
-
 const logger = createLogger();
 
 const bot = new ViberBot(logger, {
@@ -33,7 +29,11 @@ const bot = new ViberBot(logger, {
   avatar: '' // use default avatar
 });
 
-const SAMPLE_KEYBOARD = {
+const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
+                              'Пляшка 4л', 
+                              'Пляшка 0.5л' ];
+
+const TO_ORDER_KEYBOARD = { // keyboard with button for making order
 	'Type': 'keyboard',
 	'Revision': 1,
 	'Buttons': [
@@ -41,14 +41,47 @@ const SAMPLE_KEYBOARD = {
 			'Columns': 6,
 			'Rows': 1,
 			'BgColor': '#e6f5ff',
-      'BgLoop': true,
       'Text': 'Замовити',
 			'ActionType': 'reply',
-			'ActionBody': 'зробити замовлення'
+			'ActionBody': '/makeOrder'
 		}
 	]
 };
 
+const ORDER_MENU_KEYBOARD = {
+  'Type': 'keyboard',
+  'Revision': 1,
+  'Buttons': [
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': ASSORTMENT_OF_GOODS[0],
+      'ActionType': 'reply',
+      'ActionBody': 'зробити замовлення'
+    },
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': ASSORTMENT_OF_GOODS[1],
+      'ActionType': 'reply',
+      'ActionBody': 'зробити замовлення'
+    },
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': ASSORTMENT_OF_GOODS[2],
+      'ActionType': 'reply',
+      'ActionBody': 'зробити замовлення'
+    }  
+  ]
+};
+
+const say = (response, message) => {
+  response.send(new TextMessage(message));
+};
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}. 
@@ -56,19 +89,29 @@ bot.onSubscribe(response => {
 });
 
 bot.on(BotEvents.CONVERSATION_STARTED, (userProfile, isSubscribed, context, onFinish) => {
-  
+  //
+  //
+  //  
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   if (!(message instanceof TextMessage))
     say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
-});
 
-bot.onTextMessage(/./, (message, response) => {
   say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 
-  response.send(new KeyboardMessage(SAMPLE_KEYBOARD));
+  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
+
+bot.onTextMessage(/\/makeOrder/, (message, response) => {
+  response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+});
+
+// bot.onTextMessage(/./, (message, response) => {
+//   say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
+
+//   response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+// });
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
