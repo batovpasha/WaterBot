@@ -29,6 +29,8 @@ const bot = new ViberBot(logger, {
   avatar: '' // use default avatar
 });
 
+let BOTTLE_TO_ORDER, QUANTITY_TO_ORDER, SHIPPING_ADDRESS;
+
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
                               'Пляшка 4л', 
                               'Пляшка 0.5л' ];
@@ -58,7 +60,7 @@ const ORDER_MENU_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': ASSORTMENT_OF_GOODS[0],
       'ActionType': 'reply',
-      'ActionBody': 'зробити замовлення'
+      'ActionBody': '/firstBottleFromAssortment'
     },
     {
       'Columns': 6,
@@ -66,7 +68,7 @@ const ORDER_MENU_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': ASSORTMENT_OF_GOODS[1],
       'ActionType': 'reply',
-      'ActionBody': 'зробити замовлення'
+      'ActionBody': '/secondBottleFromAssortment'
     },
     {
       'Columns': 6,
@@ -74,8 +76,48 @@ const ORDER_MENU_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': ASSORTMENT_OF_GOODS[2],
       'ActionType': 'reply',
-      'ActionBody': 'зробити замовлення'
+      'ActionBody': '/thirdBottleFromAssortment'
     }  
+  ]
+};
+
+const QUANTITY_TO_ORDER_KEYBOARD = {
+  'Type': 'keyboard',
+  'Revision': 1,
+  'Buttons': [
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': '1 шт.',
+      'ActionType': 'reply',
+      'ActionBody': '/keyboardOfGoodsQuantity'
+    },
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': '2 шт.',
+      'ActionType': 'reply',
+      'ActionBody': '/keyboardOfGoodsQuantity'
+
+    },
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': '5 шт.',
+      'ActionType': 'reply',
+      'ActionBody': '/keyboardOfGoodsQuantity'
+    },
+    {
+      'Columns': 6,
+      'Rows': 1,
+      'BgColor': '#e6f5ff',
+      'Text': 'Ручний ввід',
+      'ActionType': 'reply',
+      'ActionBody': '/keyboardOfGoodsQuantity'
+    }
   ]
 };
 
@@ -101,6 +143,24 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   // say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 
   // response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+});
+
+bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
+  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
+  
+  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
+});
+
+bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
+  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[1];
+
+  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
+});
+
+bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
+  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[2];
+
+  response.send(new KeyboarMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
