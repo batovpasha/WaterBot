@@ -131,13 +131,6 @@ bot.onSubscribe(response => {
                 `Введіть будь який текс, аби зробити замовлення.`);
 });
 
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  say(response, 'Введіть будь який текст, аби зробити замовлення' + 
-                'та використовуйте, будь-ласка, кнопки \u2193');
-
-  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-});
-
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
   
@@ -193,6 +186,13 @@ bot.onTextMessage(/\/manualInput/, (message, response) => {
 
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+});
+
+bot.onTextMessage(/./, (message, response) => {
+  say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
+                'та використовуйте, будь-ласка, кнопки \u2193');
+
+  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 http.createServer(bot.middleware())
