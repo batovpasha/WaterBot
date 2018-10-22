@@ -37,7 +37,6 @@ const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard
 
 const TO_ORDER_KEYBOARD = { // keyboard with button for making order
 	'Type': 'keyboard',
-	'Revision': 1,
 	'Buttons': [
 		{
 			'Columns': 6,
@@ -52,7 +51,6 @@ const TO_ORDER_KEYBOARD = { // keyboard with button for making order
 
 const ORDER_MENU_KEYBOARD = {
   'Type': 'keyboard',
-  'Revision': 1,
   'Buttons': [
     {
       'Columns': 6,
@@ -250,7 +248,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
   
     case '/fiveToOrder':
-      ORDER['quantity'] = 3;
+      ORDER['quantity'] = 5;
   
       return say(response, 'Вкажіть адресу доставки:');
       break;
@@ -259,10 +257,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
 }
-    say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
-                  'та використовуйте, будь-ласка, кнопки \u2193');
+  say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
+                'та використовуйте, будь-ласка, кнопки \u2193');
   
-    return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 
