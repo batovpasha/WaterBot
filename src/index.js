@@ -211,58 +211,58 @@ bot.onSubscribe(response => {
 
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
-  if (message.text === '/firstBottleFromAssortment') {
-    ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
+  switch (message.text) {
   
-    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+    case '/firstBottleFromAssortment':
+      ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
-    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-  }
+      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
-  if (message.text === '/secondBottleFromAssortment') {
-    ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
+      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      break;
   
-    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+    case '/secondBottleFromAssortment':
+      ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
+  
+      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
     
-    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-  }
+      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      break;
   
-  if (text.message === '/thirdBottleFromAssortment') {
-    ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
+    case '/thirdBottleFromAssortment':
+      ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
   
-    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
-    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-  }
+      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      break;
   
-  if (text.message === '/oneToOrder') {
-    ORDER['quantity'] = 1;
+    case '/oneToOrder':
+      ORDER['quantity'] = 1;
     
-    return say(response, 'Вкажіть адресу доставки:');
-  }
+      return say(response, 'Вкажіть адресу доставки:');
+      break;
   
-  if (message.text === '/twoToOrder') {
-    ORDER['quantity'] = 2;
+    case '/twoToOrder':
+      ORDER['quantity'] = 2;
   
-    return say(response, 'Вкажіть адресу доставки:');
-  }
+      return say(response, 'Вкажіть адресу доставки:');
+      break;
   
-  if (message.text === '/fiveToOrder') {
-    ORDER['quantity'] = 3;
+    case '/fiveToOrder':
+      ORDER['quantity'] = 3;
   
-    return say(response, 'Вкажіть адресу доставки:');
-  }
+      return say(response, 'Вкажіть адресу доставки:');
+      break;
   
-  if (message.text === '/makeOrder') {
-    return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
-  }
-  
-  else {
+    case '/makeOrder':
+      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      break;
+}
     say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                   'та використовуйте, будь-ласка, кнопки \u2193');
   
     return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-  }
 });
 
 
