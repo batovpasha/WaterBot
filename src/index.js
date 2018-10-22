@@ -179,12 +179,12 @@ bot.onTextMessage(/\/manualInput/, (message, response) => {
 
   bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     if (isNaN(message.text)) 
-      say(response, `Некоректе значення!`);
+      return say(response, `Некоректе значення!`);
 
     else {
       QUANTITY_TO_ORDER = parseInt(message.text);
 
-      say(response, message.text);
+      return say(response, message.text);
     } 
   });
 });
