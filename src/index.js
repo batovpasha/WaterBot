@@ -126,14 +126,14 @@ const say = (response, message) => {
 };
 
 bot.onSubscribe(response => {
-  say(response, `Привіт, ${response.userProfile.name}. 
-                 Я ${bot.name}! Я допоможу вам зробити замовлення.
-                 Введіть будь який текс, аби зробити замовлення.`);
+  say(response, `Привіт, ${response.userProfile.name}.` +  
+                `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
+                `Введіть будь який текс, аби зробити замовлення.`);
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  say(response, `Введіть будь який текст, аби зробити замовлення 
-                 та використовуйте, будь-ласка, кнопки \u2193`);
+  say(response, 'Введіть будь який текст, аби зробити замовлення' + 
+                'та використовуйте, будь-ласка, кнопки \u2193');
 
   return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
