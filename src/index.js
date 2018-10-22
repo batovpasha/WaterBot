@@ -81,7 +81,6 @@ const ORDER_MENU_KEYBOARD = {
 
 const QUANTITY_TO_ORDER_KEYBOARD = {
   'Type': 'keyboard',
-  'Revision': 1,
   'Buttons': [
     {
       'Columns': 6,
@@ -256,7 +255,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/makeOrder':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
-}
+  }
+  
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
   
