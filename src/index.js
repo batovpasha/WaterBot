@@ -196,7 +196,7 @@ bot.onTextMessage(/\/makeOrder/, (message, response) => {
   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
-bot.onTextMessage(/\/замовити/, (message, response) => {
+bot.onTextMessage(/./, (message, response) => {
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
 
