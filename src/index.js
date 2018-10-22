@@ -142,29 +142,29 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
   say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 
-  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
   
-  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[1];
 
-  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[2];
 
-  response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
-  response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+  return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
 // bot.onTextMessage(/./, (message, response) => {
