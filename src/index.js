@@ -210,9 +210,7 @@ bot.onSubscribe(response => {
 // });
 
 
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  say(response, message.text);
-  
+bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
   if (message.text === '/firstBottleFromAssortment') {
     ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
