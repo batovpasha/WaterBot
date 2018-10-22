@@ -29,7 +29,9 @@ const bot = new ViberBot(logger, {
   avatar: '' // use default avatar
 });
 
-let BOTTLE_TO_ORDER, QUANTITY_TO_ORDER, SHIPPING_ADDRESS;
+const ORDER = {};
+
+// let BOTTLE_TO_ORDER, QUANTITY_TO_ORDER, SHIPPING_ADDRESS;
 
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
                               'Пляшка 4л', 
@@ -132,7 +134,7 @@ bot.onSubscribe(response => {
 });
 
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
-  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
+  ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
 
   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
 
@@ -140,7 +142,7 @@ bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
 });
 
 bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
-  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[1];
+  ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
 
   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
@@ -148,7 +150,7 @@ bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
 });
 
 bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
-  BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[2];
+  ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
 
   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
 
@@ -156,18 +158,18 @@ bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
 });
 
 bot.onTextMessage(/\/oneToOrder/, (message, response) => {
-  QUANTITY_TO_ORDER = 1;
+  ORDER['quantity'] = 1;
 
 });
 
 bot.onTextMessage(/\/twoToOrder/, (message, response) => {
-  QUANTITY_TO_ORDER = 1;
+  ORDER['quantity'] = 2;
 
   
 });
 
 bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
-  QUANTITY_TO_ORDER = 1;
+  ORDER['quantity'] = 3;
 
   
 });
@@ -194,7 +196,7 @@ bot.onTextMessage(/\/makeOrder/, (message, response) => {
   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
-bot.onTextMessage(/^[^\d]*$/, (message, response) => {
+bot.onTextMessage(/\/замовити/, (message, response) => {
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
 
