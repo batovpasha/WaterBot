@@ -179,13 +179,14 @@ bot.onTextMessage(/\/manualInput/, (message, response) => {
 
   bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     if (isNaN(message.text)) 
-      return say(response, `Некоректе значення!`);
+      return say(response, `Некоректне значення!`);
 
     else {
       QUANTITY_TO_ORDER = parseInt(message.text);
 
       return say(response, message.text);
-    } 
+    }
+    
   });
 });
 
@@ -193,7 +194,7 @@ bot.onTextMessage(/\/makeOrder/, (message, response) => {
   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
-bot.onTextMessage(/./, (message, response) => {
+bot.onTextMessage(/^[^\d]*&/, (message, response) => {
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
 
