@@ -1,12 +1,12 @@
 'use strict';
 
-const ViberBot = require('viber-bot').Bot;
-const BotEvents = require('viber-bot').Events;
-const TextMessage = require('viber-bot').Message.Text;
+const ViberBot        = require('viber-bot').Bot;
+const BotEvents       = require('viber-bot').Events;
+const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
 
 const winston = require('winston');
-const toYAML = require('winston-console-formatter');
+const toYAML  = require('winston-console-formatter');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
@@ -130,19 +130,19 @@ bot.onSubscribe(response => {
                  Я ${bot.name}! Я допоможу вам зробити замовлення.`);
 });
 
-bot.on(BotEvents.CONVERSATION_STARTED, (userProfile, isSubscribed, context, onFinish) => {
-  //
-  //
-  //  
-});
+// bot.on(BotEvents.CONVERSATION_STARTED, (userProfile, isSubscribed, context, onFinish) => {
+//   //
+//   //
+//   //  
+// });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  if (!(message instanceof TextMessage))
-    say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
+  // if (!(message instanceof TextMessage))
+  //   say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
 
-  // say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
+  say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
 
-  // response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
@@ -167,11 +167,11 @@ bot.onTextMessage(/\/makeOrder/, (message, response) => {
   response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
 
-bot.onTextMessage(/./, (message, response) => {
-  say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
+// bot.onTextMessage(/./, (message, response) => {
+//   say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
 
-  response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-});
+//   response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+// });
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
