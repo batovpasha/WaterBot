@@ -36,7 +36,8 @@ const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard
                               'Пляшка 0.5л' ];
 
 const TO_ORDER_KEYBOARD = { // keyboard with button for making order
-	'Type': 'keyboard',
+  'Type': 'keyboard',
+  'InputFieldState': 'hidden',
 	'Buttons': [
 		{
 			'Columns': 6,
@@ -51,6 +52,7 @@ const TO_ORDER_KEYBOARD = { // keyboard with button for making order
 
 const ORDER_MENU_KEYBOARD = {
   'Type': 'keyboard',
+  'InputFieldState': 'hidden',
   'Buttons': [
     {
       'Columns': 6,
@@ -81,6 +83,7 @@ const ORDER_MENU_KEYBOARD = {
 
 const QUANTITY_TO_ORDER_KEYBOARD = {
   'Type': 'keyboard',
+  'InputFieldState': 'hidden',
   'Buttons': [
     {
       'Columns': 6,
