@@ -211,6 +211,8 @@ bot.onSubscribe(response => {
 
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  say(response, message.text);
+  
   if (message.text === '/firstBottleFromAssortment') {
     ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
@@ -219,7 +221,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
   }
   
-  else if (message.text === '/secondBottleFromAssortment') {
+  if (message.text === '/secondBottleFromAssortment') {
     ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
   
     say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
@@ -227,7 +229,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
   }
   
-  else if (text.message === '/thirdBottleFromAssortment') {
+  if (text.message === '/thirdBottleFromAssortment') {
     ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
   
     say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
@@ -235,25 +237,25 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
   }
   
-  else if (text.message === '/oneToOrder') {
+  if (text.message === '/oneToOrder') {
     ORDER['quantity'] = 1;
     
     return say(response, 'Вкажіть адресу доставки:');
   }
   
-  else if (message.text === '/twoToOrder') {
+  if (message.text === '/twoToOrder') {
     ORDER['quantity'] = 2;
   
     return say(response, 'Вкажіть адресу доставки:');
   }
   
-  else if (message.text === '/fiveToOrder') {
+  if (message.text === '/fiveToOrder') {
     ORDER['quantity'] = 3;
   
     return say(response, 'Вкажіть адресу доставки:');
   }
   
-  else if (message.text === '/makeOrder') {
+  if (message.text === '/makeOrder') {
     return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
   }
   
