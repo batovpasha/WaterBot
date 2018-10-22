@@ -91,7 +91,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': '1 шт.',
       'ActionType': 'reply',
-      'ActionBody': '/keyboardOfGoodsQuantity'
+      'ActionBody': '/oneToOrder'
     },
     {
       'Columns': 6,
@@ -99,7 +99,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': '2 шт.',
       'ActionType': 'reply',
-      'ActionBody': '/keyboardOfGoodsQuantity'
+      'ActionBody': '/twoToOrder'
 
     },
     {
@@ -108,7 +108,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': '5 шт.',
       'ActionType': 'reply',
-      'ActionBody': '/keyboardOfGoodsQuantity'
+      'ActionBody': '/fiveToOrder'
     },
     {
       'Columns': 6,
@@ -116,7 +116,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'BgColor': '#e6f5ff',
       'Text': 'Ручний ввід',
       'ActionType': 'reply',
-      'ActionBody': '/keyboardOfGoodsQuantity'
+      'ActionBody': '/manualInput'
     }
   ]
 };
@@ -127,20 +127,13 @@ const say = (response, message) => {
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}. 
-                 Я ${bot.name}! Я допоможу вам зробити замовлення.`);
+                 Я ${bot.name}! Я допоможу вам зробити замовлення.
+                 Введіть будь який текс, аби зробити замовлення.`);
 });
 
-// bot.on(BotEvents.CONVERSATION_STARTED, (userProfile, isSubscribed, context, onFinish) => {
-//   //
-//   //
-//   //  
-// });
-
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  // if (!(message instanceof TextMessage))
-  //   say(response, 'Вибачте. Я розумію лише текстові повідомлення.');
-
-  say(response, 'Використовуйте, будь-ласка, кнопки \u2193');
+  say(response, `Введіть будь який текст, аби зробити замовлення 
+                 та використовуйте, будь-ласка, кнопки \u2193`);
 
   return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
@@ -163,15 +156,44 @@ bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
+bot.onTextMessage(/\/oneToOrder/, (message, response) => {
+  QUANTITY_TO_ORDER = 1;
+
+  return say(message, '1 шт. до замовлення');
+});
+
+bot.onTextMessage(/\/twoToOrder/, (message, response) => {
+  QUANTITY_TO_ORDER = 1;
+
+  return say(message, '2 шт. до замовлення');
+});
+
+bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
+  QUANTITY_TO_ORDER = 1;
+
+  return say(message, '5 шт. до замовлення');
+});
+
+bot.onTextMessage(/\/manualInput/, (message, response) => {
+  QUANTITY_TO_ORDER = 1;
+
+  say(response, `Введіть, будь ласка, бажану кількість даного товару:`);
+
+  bot.onTextMessage(/./, (message, response) => {
+    if (isNaN(message.text)) 
+      return say(response, `Некоректе значення!`);
+
+    else {
+      QUANTITY_TO_ORDER = parseInt(message.text);
+
+      return say(response, message.text);
+    } 
+  });
+});
+
 bot.onTextMessage(/\/makeOrder/, (message, response) => {
   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
 });
-
-// bot.onTextMessage(/./, (message, response) => {
-//   say(response, 'Використовуйте, будь-ласка, кнопки \u2193'); 
-
-//   response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-// });
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
