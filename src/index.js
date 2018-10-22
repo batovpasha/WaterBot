@@ -152,19 +152,19 @@ bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
 bot.onTextMessage(/\/oneToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  return say(message, '1 шт. до замовлення');
+  say(message, '1 шт. до замовлення');
 });
 
 bot.onTextMessage(/\/twoToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  return say(message, '2 шт. до замовлення');
+  say(message, '2 шт. до замовлення');
 });
 
 bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  return say(message, '5 шт. до замовлення');
+  say(message, '5 шт. до замовлення');
 });
 
 bot.onTextMessage(/\/manualInput/, (message, response) => {
@@ -174,12 +174,12 @@ bot.onTextMessage(/\/manualInput/, (message, response) => {
 
   bot.onTextMessage(/./, (message, response) => {
     if (isNaN(message.text)) 
-      return say(response, `Некоректе значення!`);
+      say(response, `Некоректе значення!`);
 
     else {
       QUANTITY_TO_ORDER = parseInt(message.text);
 
-      return say(response, message.text);
+      say(response, message.text);
     } 
   });
 });
