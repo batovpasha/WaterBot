@@ -31,8 +31,6 @@ const bot = new ViberBot(logger, {
 
 const ORDER = {};
 
-// let BOTTLE_TO_ORDER, QUANTITY_TO_ORDER, SHIPPING_ADDRESS;
-
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
                               'Пляшка 4л', 
                               'Пляшка 0.5л' ];
@@ -133,75 +131,158 @@ bot.onSubscribe(response => {
                 `Введіть будь який текс, аби зробити замовлення.`);
 });
 
-bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
-  ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
-
-  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
-
-  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-});
-
-bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
-  ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
-
-  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
+    ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
-  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-});
-
-bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
-  ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
-
-  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
-
-  return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
-});
-
-bot.onTextMessage(/\/oneToOrder/, (message, response) => {
-  ORDER['quantity'] = 1;
-
-});
-
-bot.onTextMessage(/\/twoToOrder/, (message, response) => {
-  ORDER['quantity'] = 2;
-
+    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
-});
-
-bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
-  ORDER['quantity'] = 3;
-
-  
-});
-
-bot.onTextMessage(/\/manualInput/, (message, response) => {
-  QUANTITY_TO_ORDER = 1;
-
-  say(response, `Введіть, будь ласка, бажану кількість даного товару:`);
-
-  bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-    if (isNaN(message.text)) 
-      return say(response, `Некоректне значення!`);
-
-    else {
-      QUANTITY_TO_ORDER = parseInt(message.text);
-
-      return say(response, message.text);
-    }
-    
+    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
   });
+  
+  bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
+    ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
+  
+    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+    
+    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  });
+  
+  bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
+    ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
+  
+    say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+  
+    return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+  });
+  
+  bot.onTextMessage(/\/oneToOrder/, (message, response) => {
+    ORDER['quantity'] = 1;
+    
+    say(response, 'Вкажіть адресу доставки:');
+  
+    bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  
+    });
+  });
+  
+  bot.onTextMessage(/\/twoToOrder/, (message, response) => {
+    ORDER['quantity'] = 2;
+  
+    return;
+  });
+  
+  bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
+    ORDER['quantity'] = 3;
+  
+    return;
+  });
+  
+  bot.onTextMessage(/\/manualInput/, (message, response) => {
+    QUANTITY_TO_ORDER = 1;
+  
+    say(response, `Введіть, будь ласка, бажану кількість даного товару:`);
+  
+    bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+      if (isNaN(message.text)) 
+        return say(response, `Некоректне значення!`);
+  
+      else {
+        QUANTITY_TO_ORDER = parseInt(message.text);
+  
+        return say(response, message.text);
+      }
+      
+    });
+  });
+  
+  bot.onTextMessage(/\/makeOrder/, (message, response) => {
+    return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+  });
+  
+  bot.onTextMessage(/./, (message, response) => {
+    say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
+                  'та використовуйте, будь-ласка, кнопки \u2193');
+  
+    return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  });
+  
 });
 
-bot.onTextMessage(/\/makeOrder/, (message, response) => {
-  return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
-});
+// bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
+//   ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
 
-bot.onTextMessage(/./, (message, response) => {
-  say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
-                'та використовуйте, будь-ласка, кнопки \u2193');
+//   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
 
-  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-});
+//   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+// });
+
+// bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
+//   ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
+
+//   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+  
+//   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+// });
+
+// bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
+//   ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
+
+//   say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+
+//   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+// });
+
+// bot.onTextMessage(/\/oneToOrder/, (message, response) => {
+//   ORDER['quantity'] = 1;
+  
+//   say(response, 'Вкажіть адресу доставки:');
+
+//   bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+
+//   });
+// });
+
+// bot.onTextMessage(/\/twoToOrder/, (message, response) => {
+//   ORDER['quantity'] = 2;
+
+//   return;
+// });
+
+// bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
+//   ORDER['quantity'] = 3;
+
+//   return;
+// });
+
+// bot.onTextMessage(/\/manualInput/, (message, response) => {
+//   QUANTITY_TO_ORDER = 1;
+
+//   say(response, `Введіть, будь ласка, бажану кількість даного товару:`);
+
+//   bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+//     if (isNaN(message.text)) 
+//       return say(response, `Некоректне значення!`);
+
+//     else {
+//       QUANTITY_TO_ORDER = parseInt(message.text);
+
+//       return say(response, message.text);
+//     }
+    
+//   });
+// });
+
+// bot.onTextMessage(/\/makeOrder/, (message, response) => {
+//   return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+// });
+
+// bot.onTextMessage(/./, (message, response) => {
+//   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
+//                 'та використовуйте, будь-ласка, кнопки \u2193');
+
+//   return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+// });
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
