@@ -114,7 +114,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'Columns': 6,
       'Rows': 1,
       'BgColor': '#e6f5ff',
-      'Text': 'Ручний ввід',
+      'Text': 'Введіть своє значення та натисність \'відправити\'',
       'ActionType': 'reply',
       'ActionBody': '/manualInput'
     }
@@ -133,18 +133,24 @@ bot.onSubscribe(response => {
 
 bot.onTextMessage(/\/firstBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[0];
-  
+
+  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+
   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/secondBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[1];
 
+  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+  
   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
 
 bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
   BOTTLE_TO_ORDER = ASSORTMENT_OF_GOODS[2];
+
+  say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
 
   return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
 });
@@ -152,19 +158,18 @@ bot.onTextMessage(/\/thirdBottleFromAssortment/, (message, response) => {
 bot.onTextMessage(/\/oneToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  say(message, '1 шт. до замовлення');
 });
 
 bot.onTextMessage(/\/twoToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  say(message, '2 шт. до замовлення');
+  
 });
 
 bot.onTextMessage(/\/fiveToOrder/, (message, response) => {
   QUANTITY_TO_ORDER = 1;
 
-  say(message, '5 шт. до замовлення');
+  
 });
 
 bot.onTextMessage(/\/manualInput/, (message, response) => {
@@ -172,7 +177,7 @@ bot.onTextMessage(/\/manualInput/, (message, response) => {
 
   say(response, `Введіть, будь ласка, бажану кількість даного товару:`);
 
-  bot.onTextMessage(/./, (message, response) => {
+  bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     if (isNaN(message.text)) 
       say(response, `Некоректе значення!`);
 
