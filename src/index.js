@@ -210,7 +210,7 @@ bot.onSubscribe(response => {
 // });
 
 
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
+bot.onTextMessage(/./, (message, response) => {  
   switch (message.text) {
   
     case '/firstBottleFromAssortment':
