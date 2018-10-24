@@ -32,7 +32,8 @@ const bot = new ViberBot(logger, {
 const ORDER = {
   bottle: '',
   quantity: '',
-  address: ''
+  address: '',
+  paymentMethod: '' // 0 - cash, 1 - cashless
 };
 
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
@@ -148,6 +149,28 @@ const PAYMENT_METHOD_KEYBOARD = {
 	]
 };
 
+const CONFIRM_KEYBOARD = { 
+  'Type': 'keyboard',
+  'InputFieldState': 'hidden',
+	'Buttons': [
+		{
+			'Columns': 6,
+			'Rows': 1,
+			'BgColor': '#e6f5ff',
+      'Text': 'Підтвердити',
+			'ActionType': 'reply',
+			'ActionBody': '/confirm'
+    },
+    {
+			'Columns': 6,
+			'Rows': 1,
+			'BgColor': '#e6f5ff',
+      'Text': 'Скасувати',
+			'ActionType': 'reply',
+			'ActionBody': '/cancel'
+		}
+	]
+};
 
 const say = (response, message) => {
   return response.send(new TextMessage(message));
@@ -162,7 +185,7 @@ bot.onTextMessage(/".*"/, (message, response) => {
 bot.onTextMessage(/\/[0-9]+/, (message, response) => {
   ORDER['quantity'] = message.text;
 
-  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD)); 
+  return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
 });
 
 bot.onSubscribe(response => {
@@ -224,12 +247,27 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
                            'Перед вашим числом має стояти слеш "/"');
       
+    case '/cash':
+      say(response, 'Ваше замовлення:\n' +
+                    `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
+                    `Адреса доставки: ${ORDER['address']}` + 
+                    `Оплата готівкою`);     
       
-    // case message.text.toSting().match(/".*"/ig).join(''):
-    //   ORDER['address'] = message.text.toSring().match(/[^"].*[^"]/).join(''); // value without ""
-      
-    //   return response.send(new TextMessage('everything is ok!'));
-    //   break;
+      return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+
+    case '/cashless':
+      // say(response, 'Ваше замовлення:\n' +
+      // `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
+      // `Адреса доставки: ${ORDER['address']}` + 
+      // `Оплата готівкою`);     
+
+      return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+
+    case '/confirm':
+      return say(response, 'Дякуємо за замовлення, ми зв\'яжемося з Вами у найближчий час');
+    
+    case '/cancel':
+      return;
   }
   
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
