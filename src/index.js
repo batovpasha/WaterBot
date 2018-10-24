@@ -125,28 +125,28 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
   ]
 };
 
-const PAYMENT_METHOD_KEYBOARD = { 
-  'Type': 'keyboard',
-  'InputFieldState': 'hidden',
-	'Buttons': [
-		{
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Безготівковий розрахунок',
-			'ActionType': 'reply',
-			'ActionBody': '/cashlessPayment'
-    },
-    {
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Сплата готівкою',
-			'ActionType': 'reply',
-			'ActionBody': '/cashPayment'
-		}
-	]
-};
+// const PAYMENT_METHOD_KEYBOARD = { 
+//   'Type': 'keyboard',
+//   'InputFieldState': 'hidden',
+// 	'Buttons': [
+// 		{
+// 			'Columns': 6,
+// 			'Rows': 1,
+// 			'BgColor': '#e6f5ff',
+//       'Text': 'Безготівковий розрахунок',
+// 			'ActionType': 'reply',
+// 			'ActionBody': '/cashlessPayment'
+//     },
+//     {
+// 			'Columns': 6,
+// 			'Rows': 1,
+// 			'BgColor': '#e6f5ff',
+//       'Text': 'Сплата готівкою',
+// 			'ActionType': 'reply',
+// 			'ActionBody': '/cashPayment'
+// 		}
+// 	]
+// };
 
 
 const say = (response, message) => {
