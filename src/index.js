@@ -247,7 +247,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
                            'Перед вашим числом має стояти слеш "/"');
       
-    case '/cash':
+    case '/cashPayment':
       say(response, 'Ваше замовлення:\n' +
                     `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
                     `Адреса доставки: ${ORDER['address']}` + 
@@ -255,7 +255,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
 
-    case '/cashless':
+    case '/cashlessPayment':
       // say(response, 'Ваше замовлення:\n' +
       // `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
       // `Адреса доставки: ${ORDER['address']}` + 
