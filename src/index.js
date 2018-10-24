@@ -240,7 +240,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
   
     case '/замовити':
-      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
       break;
 
     case '/manualInput':
