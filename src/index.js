@@ -153,6 +153,12 @@ const say = (response, message) => {
   return response.send(new TextMessage(message));
 };
 
+bot.onTextMessage(/".*"/, (message, response) => {
+  ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+    
+  return response.send(new TextMessage('dsadass'));
+});
+
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
