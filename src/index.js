@@ -196,7 +196,10 @@ bot.onSubscribe(response => {
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
   switch (message.text) {
-  
+    
+    case '/makeOrder':
+      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+
     case '/firstBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
