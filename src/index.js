@@ -125,28 +125,28 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
   ]
 };
 
-const PAYMENT_METHOD_KEYBOARD = { 
-  'Type': 'keyboard',
-  'InputFieldState': 'hidden',
-	'Buttons': [
-		{
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Безготівковий розрахунок',
-			'ActionType': 'reply',
-			'ActionBody': '/cashlessPayment'
-    },
-    {
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Сплата готівкою',
-			'ActionType': 'reply',
-			'ActionBody': '/cashPayment'
-		}
-	]
-};
+// const PAYMENT_METHOD_KEYBOARD = { 
+//   'Type': 'keyboard',
+//   'InputFieldState': 'hidden',
+// 	'Buttons': [
+// 		{
+// 			'Columns': 6,
+// 			'Rows': 1,
+// 			'BgColor': '#e6f5ff',
+//       'Text': 'Безготівковий розрахунок',
+// 			'ActionType': 'reply',
+// 			'ActionBody': '/cashlessPayment'
+//     },
+//     {
+// 			'Columns': 6,
+// 			'Rows': 1,
+// 			'BgColor': '#e6f5ff',
+//       'Text': 'Сплата готівкою',
+// 			'ActionType': 'reply',
+// 			'ActionBody': '/cashPayment'
+// 		}
+// 	]
+// };
 
 
 const say = (response, message) => {
@@ -209,11 +209,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
   }
   
-  if (message.text === message.text.match(/".*"/ig).join('')) { // message like "anythingAddressYouWant"
-    ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+  // if (message.text === message.text.match(/".*"/ig).join('')) { // message like "anythingAddressYouWant"
+  //   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
-    return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
-  }
+  //   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+  // }
 
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
