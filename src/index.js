@@ -207,13 +207,19 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/makeOrder':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
+
+    case message.text.match(/".*"/ig).join(''):
+      ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+      
+      return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+      break;
   }
   
-  if (message.text === message.text.match(/".*"/ig).join('')) { // message like "anythingAddressYouWant"
-    ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+  // if (message.text === message.text.match(/".*"/ig).join('')) { // message like "anythingAddressYouWant"
+  //   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
-    return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
-  }
+  //   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+  // }
 
   say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
                 'та використовуйте, будь-ласка, кнопки \u2193');
