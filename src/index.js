@@ -29,7 +29,11 @@ const bot = new ViberBot(logger, {
   avatar: '' // use default avatar
 });
 
-const ORDER = {};
+const ORDER = {
+  bottle: '',
+  quantity: '',
+  address: ''
+};
 
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
                               'Пляшка 4л', 
@@ -189,4 +193,4 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 
 http.createServer(bot.middleware())
-    .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/"));
+    .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/")); 
