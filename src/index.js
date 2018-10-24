@@ -211,7 +211,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case message.text.match(/".*"/ig).join(''):
       ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
       
-      return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+      return response.send(new TextMessage("everything is ok!"));
       break;
   }
   
