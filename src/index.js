@@ -159,10 +159,10 @@ bot.onTextMessage(/".*"/, (message, response) => {
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
-bot.onTextMessage(/\/\/d+/, (message, response) => {
+bot.onTextMessage(/\/[0-9]+/, (message, response) => {
   ORDER['quantity'] = message.text;
 
-  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD)); 
 });
 
 bot.onSubscribe(response => {
