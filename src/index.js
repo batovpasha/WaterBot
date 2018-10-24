@@ -159,6 +159,12 @@ bot.onTextMessage(/".*"/, (message, response) => {
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
+bot.onTextMessage(/\/\/d+/, (message, response) => {
+  ORDER['quantity'] = message.text;
+
+  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+});
+
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
@@ -195,25 +201,30 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'] = 1;
     
-      return say(response, 'Вкажіть адресу доставки:');
+      return say(response, 'Вкажіть адресу доставки у лапках(""):');
       break;
   
     case '/twoToOrder':
       ORDER['quantity'] = 2;
   
-      return say(response, 'Вкажіть адресу доставки:');
+      return say(response, 'Вкажіть адресу доставки у лапках(""):');
       break;
   
     case '/fiveToOrder':
       ORDER['quantity'] = 5;
   
-      return say(response, 'Вкажіть адресу доставки:');
+      return say(response, 'Вкажіть адресу доставки у лапках(""):');
       break;
   
     case '/makeOrder':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
 
+    case '/manualInput':
+      return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
+                           'Перед вашим числом має стояти слеш "/"');
+      
+      
     // case message.text.toSting().match(/".*"/ig).join(''):
     //   ORDER['address'] = message.text.toSring().match(/[^"].*[^"]/).join(''); // value without ""
       
