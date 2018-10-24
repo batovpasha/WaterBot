@@ -153,11 +153,11 @@ const say = (response, message) => {
   return response.send(new TextMessage(message));
 };
 
-bot.onTextMessage(/".*"/, (message, response) => {
-  ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+// bot.onTextMessage(/".*"/, (message, response) => {
+//   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
-  return response.send(new TextMessage('dsadass'));
-});
+//   return response.send(new TextMessage('dsadass'));
+// });
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
@@ -214,11 +214,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
 
-    // case message.text.match(/".*"/ig).join(''):
-    //   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+    case message.text.toSting().match(/".*"/ig).join(''):
+      ORDER['address'] = message.text.toSring().match(/[^"].*[^"]/).join(''); // value without ""
       
-    //   return response.send(new TextMessage("everything is ok!"));
-    //   break;
+      return response.send(new TextMessage('everything is ok!'));
+      break;
   }
   
   // if (message.text === message.text.match(/".*"/ig).join('')) { // message like "anythingAddressYouWant"
