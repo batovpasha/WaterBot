@@ -183,7 +183,10 @@ bot.onTextMessage(/".*"/, (message, response) => {
 });
 
 bot.onTextMessage(/\/[0-9]+/, (message, response) => {
-  ORDER['quantity'] = message.text;
+  let quantityFromMessage = message.text;
+  quantityFromMessage.shift(); // erase '/' from begin
+  
+  ORDER['quantity'] = quantityFromMessage;
 
   return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
 });
@@ -251,12 +254,12 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Перед вашим числом має стояти слеш "/"');
       
     case '/cashPayment':
-      say(response, 'Ваше замовлення:\n' +
-                    `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
-                    `Адреса доставки: ${ORDER['address']}` + 
-                    `Оплата готівкою`);     
-      
-      return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+      response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+    
+      return say(response, 'Ваше замовлення:\n' +
+                           `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
+                           `Адреса доставки: ${ORDER['address']}` + 
+                           `Оплата готівкою`);     
 
     case '/cashlessPayment':
       // say(response, 'Ваше замовлення:\n' +
