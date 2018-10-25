@@ -246,19 +246,20 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Перед вашим числом має стояти слеш "/"');
       
     case '/cashPayment':
-      response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
-    
       return say(response, 'Ваше замовлення:\n' +
                            `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
                            `Адреса доставки: ${ORDER['address']}\n` + 
-                           `Оплата готівкою\n`);     
+                           'Оплата готівкою\n' + 
+                           'Введіть "/ок" для підтвердження або скасування замовлення');     
 
     case '/cashlessPayment':
-      // say(response, 'Ваше замовлення:\n' +
-      // `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
-      // `Адреса доставки: ${ORDER['address']}` + 
-      // `Оплата готівкою`);     
+      return say(response, 'Ваше замовлення:\n' +
+                           `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
+                           `Адреса доставки: ${ORDER['address']}\n` + 
+                           'Оплата готівкою\n' + 
+                           'Введіть "/ок" для підтвердження або скасування замовлення');     
 
+    case '/ок':
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
 
     case '/confirm':
