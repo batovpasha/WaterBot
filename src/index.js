@@ -242,9 +242,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Вкажіть адресу доставки у лапках(""):');
       break;
   
-    case '/замовити':
-      return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-      break;
+    // case '/замовити':
+    //   return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+    //   break;
 
     case '/manualInput':
       return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
@@ -273,10 +273,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return;
   }
   
-  // say(response, 'Введіть будь який текст, аби зробити замовлення ' + 
-  //               'та використовуйте, будь-ласка, кнопки \u2193');
-  
-  // return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 
