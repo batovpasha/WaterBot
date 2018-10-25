@@ -176,17 +176,13 @@ const say = (response, message) => {
   return response.send(new TextMessage(message));
 };
 
-bot.onTextMessage(/".*"/, (message, response) => {
-  ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
-    
-  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
-});
-
-bot.onTextMessage(/\/[0-9]+/, (message, response) => {
-  let quantityFromMessage = message.text;
+bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
+  let quantityFromMessage = message.text.split('');
   quantityFromMessage.shift(); // erase '/' from begin
   
-  ORDER['quantity'] = quantityFromMessage;
+  let quantity = quantityFromMessage.join('');
+
+  ORDER['quantity'] = quantity;
 
   return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
 });
@@ -195,6 +191,12 @@ bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
                 `Введіть будь який текс, аби зробити замовлення.`);
+});
+
+bot.onTextMessage(/".*"/, (message, response) => {
+  ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+    
+  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
@@ -206,23 +208,17 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/firstBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
-      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
-  
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/secondBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
-  
-      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
     
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/thirdBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
-  
-      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
@@ -245,10 +241,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Вкажіть адресу доставки у лапках(""):');
       break;
   
-    // case '/замовити':
-    //   return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-    //   break;
-
     case '/manualInput':
       return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
                            'Перед вашим числом має стояти слеш "/"');
@@ -257,9 +249,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
     
       return say(response, 'Ваше замовлення:\n' +
-                           `${ORDER['bottle']}, ${ORDER['quantity']} шт.` +
-                           `Адреса доставки: ${ORDER['address']}` + 
-                           `Оплата готівкою`);     
+                           `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
+                           `Адреса доставки: ${ORDER['address']}\n` + 
+                           `Оплата готівкою\n`);     
 
     case '/cashlessPayment':
       // say(response, 'Ваше замовлення:\n' +
