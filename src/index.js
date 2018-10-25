@@ -194,9 +194,9 @@ bot.onTextMessage(/".*"/, (message, response) => {
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
-bot.onTextMessage(/([^/]|[^"]).*/, (message, response) => {
-  return say(response, 'Введіть "/замовити", аби сформувати замовлення');
-});
+// bot.onTextMessage(/([^/]|[^"]).*/, (message, response) => {
+//   return say(response, 'Введіть "/замовити", аби сформувати замовлення');
+// });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
   switch (message.text) {
@@ -280,7 +280,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
   }
 });
-
 
 http.createServer(bot.middleware())
     .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/")); 
