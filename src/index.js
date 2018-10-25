@@ -203,7 +203,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/firstBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
   
-      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
@@ -211,7 +211,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/secondBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
   
-      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
     
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
@@ -219,7 +219,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/thirdBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
   
-      say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
+      // say(response, 'Оберіть бажану кількість товару, або введіть своє значення:');
   
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
