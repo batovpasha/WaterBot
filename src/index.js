@@ -176,21 +176,16 @@ const say = (response, message) => {
   return response.send(new TextMessage(message));
 };
 
-bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
-  let quantityFromMessage = message.text.split('');
-  quantityFromMessage.shift(); // erase '/' from begin
-  
-  let quantity = quantityFromMessage.join('');
-
-  ORDER['quantity'] = quantity;
-
-  return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
-});
-
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
                 `Введіть будь який текс, аби зробити замовлення.`);
+});
+
+bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
+  ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join(''));
+
+  return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
 });
 
 bot.onTextMessage(/".*"/, (message, response) => {
@@ -202,8 +197,13 @@ bot.onTextMessage(/".*"/, (message, response) => {
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
   switch (message.text) {
     
+    case '/замовити':
+      return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+      break;
+
     case '/makeOrder':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      break;
 
     case '/firstBottleFromAssortment':
       ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
@@ -262,13 +262,12 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
 
     case '/confirm':
-      return say(response, 'Дякуємо за замовлення, ми зв\'яжемося з Вами у найближчий час');
+      return say(response, 'Дякуємо за замовлення\n' +
+                           'Ми зв\'яжемося з Вами у найближчий час');
     
     case '/cancel':
-      return;
+      return say(response, 'Гарного дня!');
   }
-  
-  return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
 });
 
 
