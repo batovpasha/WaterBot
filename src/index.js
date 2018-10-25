@@ -31,7 +31,7 @@ const bot = new ViberBot(logger, {
 
 const ORDER = {
   bottle: '',
-  quantity: '',
+  quantity: 0,
   address: '',
   paymentMethod: '' // 0 - cash, 1 - cashless
 };
@@ -183,7 +183,7 @@ bot.onSubscribe(response => {
 });
 
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
-  ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join(''));
+  ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join('')); // number without '/'
 
   return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
 });
@@ -192,6 +192,10 @@ bot.onTextMessage(/".*"/, (message, response) => {
   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+});
+
+bot.onTextMessage(/([^/]|[^"]).*/, (message, response) => {
+  return say(response, 'Введіть "/замовити", аби сформувати замовлення');
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
@@ -256,7 +260,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Ваше замовлення:\n' +
                            `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
                            `Адреса доставки: ${ORDER['address']}\n` + 
-                           'Оплата готівкою\n' + 
+                           'Безготівковий розрахунок\n' + 
                            'Введіть "/ок" для підтвердження або скасування замовлення');     
 
     case '/ок':
@@ -267,7 +271,13 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Ми зв\'яжемося з Вами у найближчий час');
     
     case '/cancel':
+      ORDER['address'] = '';
+      ORDER['bottle'] = '';
+      ORDER['paymentMethod'] = '';
+      ORDER['quantity'] = 0;
+
       return say(response, 'Гарного дня!');
+
   }
 });
 
