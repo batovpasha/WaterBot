@@ -179,7 +179,7 @@ const say = (response, message) => {
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.` +
-                `Введіть будь який текс, аби зробити замовлення.`);
+                `Введіть "/замовити", аби сформувати замовлення.`);
 });
 
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
@@ -253,20 +253,22 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
                            `Адреса доставки: ${ORDER['address']}\n` + 
                            'Оплата готівкою\n' + 
+                           '\n' +
                            'Введіть "/ок" для підтвердження або скасування замовлення');     
 
     case '/cashlessPayment':
       return say(response, 'Ваше замовлення:\n' +
                            `${ORDER['bottle']}, ${ORDER['quantity']} шт.\n` +
                            `Адреса доставки: ${ORDER['address']}\n` + 
-                           'Безготівковий розрахунок\n' + 
+                           'Безготівковий розрахунок\n' +
+                           '\n' + 
                            'Введіть "/ок" для підтвердження або скасування замовлення');     
 
     case '/ок':
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
 
     case '/confirm':
-      return say(response, 'Дякуємо за замовлення\n' +
+      return say(response, 'Дякуємо за замовлення!\n' +
                            'Ми зв\'яжемося з Вами у найближчий час');
     
     case '/cancel':
