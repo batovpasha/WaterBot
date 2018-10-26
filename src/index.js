@@ -182,6 +182,11 @@ bot.onSubscribe(response => {
                 `Введіть "/замовити", аби сформувати замовлення.`);
 });
 
+bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
+  onFinish(new TextMessage(`Привіт, ${userProfile.name}! Радий Вас бачити\n` +
+                           'Введіть "/замовити", аби сформувати замовлення.'));
+});
+
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
   ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join('')); // number without '/'
 
