@@ -194,10 +194,6 @@ bot.onTextMessage(/".*"/, (message, response) => {
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
-// bot.onTextMessage(/([^/]|[^"]).*/, (message, response) => {
-//   return say(response, 'Введіть "/замовити", аби сформувати замовлення');
-// });
-
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
   switch (message.text) {
     
@@ -230,19 +226,22 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'] = 1;
     
-      return say(response, 'Вкажіть адресу доставки у лапках(""):');
+      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+                         + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
     case '/twoToOrder':
       ORDER['quantity'] = 2;
   
-      return say(response, 'Вкажіть адресу доставки у лапках(""):');
+      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+                         + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
     case '/fiveToOrder':
       ORDER['quantity'] = 5;
   
-      return say(response, 'Вкажіть адресу доставки у лапках(""):');
+      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+                         + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
     case '/manualInput':
@@ -277,8 +276,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       ORDER['quantity'] = 0;
 
       return say(response, 'Гарного дня!');
-
+      break;
   }
+
+  if (message.text[0] !== '/' && message.text[0] !== '"')
+    return say(response, 'Введіть "/замовити", аби сформувати замовлення');
 });
 
 http.createServer(bot.middleware())
