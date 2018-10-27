@@ -32,8 +32,7 @@ const bot = new ViberBot(logger, {
 const ORDER = {
   bottle: '',
   quantity: 0,
-  address: '',
-  paymentMethod: '' // 0 - cash, 1 - cashless
+  address: ''
 };
 
 const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
@@ -279,7 +278,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/cancel':
       ORDER['address'] = '';
       ORDER['bottle'] = '';
-      ORDER['paymentMethod'] = '';
       ORDER['quantity'] = 0;
 
       return say(response, 'Гарного дня!');
