@@ -118,7 +118,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = {
       'Columns': 6,
       'Rows': 1,
       'BgColor': '#e6f5ff',
-      'Text': 'Введіть своє значення та натисність \'відправити\'',
+      'Text': 'Інше значення',
       'ActionType': 'reply',
       'ActionBody': '/manualInput'
     }
