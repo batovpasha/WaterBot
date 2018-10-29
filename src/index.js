@@ -270,31 +270,31 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Перед вашим числом має стояти слеш "/"');
       
     case '/cashPayment':
-      let order = 'Ваше замовлення:\n';
+      let cashOrder = 'Ваше замовлення:\n';
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        order += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
+        cashOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
 
-      order += `Адреса доставки: ${ORDER['address']}\n` +
+      cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
                'Оплата готівкою\n' +
                '\n' +
                'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      return say(response, order);
+      return say(response, cashOrder);
       break;     
 
     case '/cashlessPayment':
-      let order = 'Ваше замовлення:\n';
+      let cashlessOrder = 'Ваше замовлення:\n';
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        order += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
+        cashlessOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
 
-      order += `Адреса доставки: ${ORDER['address']}\n` +
-               'Безготівковий розрахунок\n' +
-               '\n' +
-               'Введіть "/ок" для підтвердження або скасування замовлення';
+      cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
+                       'Безготівковий розрахунок\n' +
+                       '\n' +
+                       'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      return say(response, order);
+      return say(response, cashlessOrder);
       break;
 
     case '/ок':
