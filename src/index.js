@@ -189,7 +189,8 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
   ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join('')); // number without '/'
 
-  return say(response, 'Вкажіть адресу доставки у лапках(""):'); 
+  return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+                     + 'Приклад: "вул. Бажана, 42, кв. 20"');
 });
 
 bot.onTextMessage(/".*"/, (message, response) => {
