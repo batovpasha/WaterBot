@@ -280,7 +280,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                '\n' +
                'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      return say(response, order);     
+      return say(response, order);
+      break;     
 
     case '/cashlessPayment':
       let order = 'Ваше замовлення:\n';
@@ -294,6 +295,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, order);     
+      break;
 
     case '/ок':
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
