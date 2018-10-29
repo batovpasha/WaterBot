@@ -30,8 +30,8 @@ const bot = new ViberBot(logger, {
 });
 
 const ORDER = {
-  bottle: '',
-  quantity: 0,
+  bottle: [],
+  quantity: [],
   address: ''
 };
 
@@ -187,9 +187,13 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
 });
  
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
-  ORDER['quantity'] = parseInt(message.text.match(/[^/].*/).join('')); // number without '/'
+  ORDER['quantity'].push(parseInt(message.text.match(/[^/].*/).join(''))); // number without '/'
 
-  return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+  say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+              + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
+
+  return say(response, 'Якщо бажаєте продовжити,\n'  
+                     + 'вкажіть адресу доставки у лапках "ваша адреса"\n'
                      + 'Приклад: "вул. Бажана, 42, кв. 20"');
 });
 
@@ -211,41 +215,53 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/firstBottleFromAssortment':
-      ORDER['bottle'] = ASSORTMENT_OF_GOODS[0];
+      ORDER['bottle'].push(ASSORTMENT_OF_GOODS[0]);
   
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/secondBottleFromAssortment':
-      ORDER['bottle'] = ASSORTMENT_OF_GOODS[1];
+      ORDER['bottle'].push(ASSORTMENT_OF_GOODS[1]);
     
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/thirdBottleFromAssortment':
-      ORDER['bottle'] = ASSORTMENT_OF_GOODS[2];
+      ORDER['bottle'].push(ASSORTMENT_OF_GOODS[2]);
   
       return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/oneToOrder':
-      ORDER['quantity'] = 1;
-    
-      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+      ORDER['quantity'].push(1);
+
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
+      
+      return say(response, 'Якщо бажаєте продовжити,\n'  
+                         + 'вкажіть адресу доставки у лапках "ваша адреса"\n'
                          + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
     case '/twoToOrder':
-      ORDER['quantity'] = 2;
+      ORDER['quantity'].push(2);
   
-      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
+      
+      return say(response, 'Якщо бажаєте продовжити,\n'  
+                         + 'вкажіть адресу доставки у лапках "ваша адреса"\n'
                          + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
     case '/fiveToOrder':
-      ORDER['quantity'] = 5;
-  
-      return say(response, 'Вкажіть адресу доставки у лапках "ваша адреса"\n'
+      ORDER['quantity'].push(5);
+    
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
+      
+      return say(response, 'Якщо бажаєте продовжити,\n'  
+                         + 'вкажіть адресу доставки у лапках "ваша адреса"\n'
                          + 'Приклад: "вул. Бажана, 42, кв. 20"');
       break;
   
@@ -276,10 +292,13 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Дякуємо за замовлення!\n' +
                            'Ми зв\'яжемося з Вами у найближчий час');
     
+    case '/асортимент':
+      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+    
     case '/cancel':
+      ORDER['bottle'] = [];
+      ORDER['quantity'] = [];
       ORDER['address'] = '';
-      ORDER['bottle'] = '';
-      ORDER['quantity'] = 0;
 
       return say(response, 'Гарного дня!');
       break;
