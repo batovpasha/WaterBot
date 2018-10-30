@@ -281,9 +281,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         cashOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
 
       cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
-               'Оплата готівкою\n' +
-               '\n' +
-               'Введіть "/ок" для підтвердження або скасування замовлення';
+                   'Оплата готівкою\n' +
+                   '\n' +
+                   'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashOrder);
       break;     
@@ -319,10 +319,18 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       return say(response, 'Гарного дня!');
       break;
+
+    case '/скинути':
+      ORDER['bottle'] = [];
+      ORDER['quantity'] = [];
+      ORDER['address'] = '';
+
+      return say(response, 'Гарного дня!');
+      break;
   }
 
   if (message.text[0] !== '/' && message.text[0] !== '"')
-    return say(response, 'Введіть "/замовити", аби сформувати замовлення'
+    return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
                        + 'Введіть "/скинути", аби очистити введені дані про замовлення');
 });
 
