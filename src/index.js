@@ -11,6 +11,8 @@ const toYAML  = require('winston-console-formatter');
 const http = require('http');
 const port = process.env.PORT || 8080;
 
+const crypto = require('crypto'); 
+
 const createLogger = () => {
   const logger = new winston.Logger({
     level: "debug"
@@ -171,9 +173,9 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-const say = (response, message) => {
-  return response.send(new TextMessage(message));
-};
+// const hash = data => crypto.createHash('sha1').update(data).digest('hex');
+
+const say = (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
@@ -193,19 +195,22 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
               + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
 
   return say(response, 'Якщо бажаєте продовжити,\n'  
-                     + 'вкажіть адресу доставки у лапках "ваша адреса"\n'
+                     + 'вкажіть адресу доставки у лапках\n'
                      + 'Приклад: "вул. Бажана, 42, кв. 20"');
 });
 
 bot.onTextMessage(/".*"/, (message, response) => {
+  if (ORDER['address'])
+    return say(response, `Ви вже вказали адресу доставки: "${ORDER['address']}\n"`
+                       + 'Введіть "/замовити", аби сформувати замовлення.');
+  
   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
-  switch (message.text) {
-    
+  switch (message.text) {  
     case '/замовити':
       return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
       break;
@@ -317,7 +322,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 
   if (message.text[0] !== '/' && message.text[0] !== '"')
-    return say(response, 'Введіть "/замовити", аби сформувати замовлення');
+    return say(response, 'Введіть "/замовити", аби сформувати замовлення'
+                       + 'Введіть "/скинути", аби очистити введені дані про замовлення');
 });
 
 http.createServer(bot.middleware())
