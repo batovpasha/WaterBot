@@ -325,7 +325,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       ORDER['quantity'] = [];
       ORDER['address'] = '';
 
-      return say(response, 'Замовлення очищене!ґ\n'
+      return say(response, 'Замовлення очищене!\n'
                          + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
   }
