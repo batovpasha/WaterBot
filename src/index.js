@@ -37,9 +37,15 @@ const ORDER = {
   address: ''
 };
 
-const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л ПЕТ - 125 грн',   // associated with keyboard buttons by index 
-                              'Бутиль 20л метал - 160 грн', 
-                              'Пляшка 1л ПЕТ - 20 грн'];
+const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л ПЕТ',   // associated with keyboard buttons by index 
+                              'Бутиль 20л метал', 
+                              'Пляшка 1л ПЕТ' ];
+
+const PRICE_LIST = {
+  'Бутиль 20л ПЕТ': 125,
+  'Бутиль 20л метал': 160,
+  'Пляшка 1л ПЕТ': 20
+};
 
 const TO_ORDER_KEYBOARD = { // keyboard with button for making order
   'Type': 'keyboard',
@@ -180,12 +186,20 @@ const say = (response, message) => response.send(new TextMessage(message));
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.\n` +
-                `Введіть "/замовити", аби сформувати замовлення.`);
+                `Введіть "/замовити", аби сформувати замовлення.\n` +
+                'Прайс-лист:\n' +
+                'Бутиль 20л ПЕТ - 125 грн\n' +
+                'Бутиль 20л метал - 160 грн\n' +
+                'Пляшка 1л ПЕТ - 20 грн');
 });
 
 bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
   onFinish(new TextMessage(`Привіт, ${userProfile.name}! Радий Вас бачити.\n` +
-                           'Введіть "/замовити", аби сформувати замовлення.'));
+                           'Введіть "/замовити", аби сформувати замовлення.\n' +
+                           'Прайс-лист:\n' +
+                           'Бутиль 20л ПЕТ - 125 грн\n' +
+                           'Бутиль 20л метал - 160 грн\n' +
+                           'Пляшка 1л ПЕТ - 20 грн'));
 });
  
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
@@ -201,7 +215,7 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
 
 bot.onTextMessage(/".*"/, (message, response) => {
   if (ORDER['address'])
-    return say(response, `Ви вже вказали адресу доставки: "${ORDER['address']}\n"`
+    return say(response, `Ви вже вказали адресу доставки: "${ORDER['address']}"\n`
                        + 'Введіть "/замовити", аби сформувати замовлення.');
   
   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
@@ -275,6 +289,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Перед вашим числом має стояти слеш "/"');
       
     case '/cashPayment':
+      let price = 0;
+
+      for (let i = 0; i < ORDER['bottle'].length; i++)
+        price += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+
       let cashOrder = 'Ваше замовлення:\n';
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
@@ -282,6 +301,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
                    'Оплата готівкою\n' +
+                   `Вартість: ${price} грн` +
                    '\n' +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
 
@@ -332,7 +352,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
   if (message.text[0] !== '/' && message.text[0] !== '"')
     return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
-                       + 'Введіть "/скинути", аби очистити введені дані про замовлення');
+                       + 'Введіть "/скинути", аби очистити введені дані про замовлення\n'
+                       + 'Прайс-лист:\n'
+                       + 'Бутиль 20л ПЕТ - 125 грн\n'
+                       + 'Бутиль 20л метал - 160 грн\n'
+                       + 'Пляшка 1л ПЕТ - 20 грн');
 });
 
 http.createServer(bot.middleware())
