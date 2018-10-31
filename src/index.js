@@ -37,9 +37,9 @@ const ORDER = {
   address: ''
 };
 
-const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л',   // associated with keyboard buttons by index 
-                              'Пляшка 4л', 
-                              'Пляшка 0.5л' ];
+const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л ПЕТ - 125 грн',   // associated with keyboard buttons by index 
+                              'Бутиль 20л метал - 160 грн', 
+                              'Пляшка 1л ПЕТ - 20 грн'];
 
 const TO_ORDER_KEYBOARD = { // keyboard with button for making order
   'Type': 'keyboard',
