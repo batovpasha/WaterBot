@@ -215,8 +215,7 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
 
 bot.onTextMessage(/".*"/, (message, response) => {
   if (ORDER['address'])
-    return say(response, `Ви вже вказали адресу доставки: "${ORDER['address']}"\n`
-                       + 'Введіть "/замовити", аби сформувати замовлення.');
+    return;
   
   ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
     
@@ -302,7 +301,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
                    'Оплата готівкою\n' +
                    `Вартість: ${price} грн` +
-                   '\n' +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashOrder);
@@ -316,7 +314,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
                        'Безготівковий розрахунок\n' +
-                       '\n' +
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashlessOrder);
