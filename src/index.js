@@ -291,7 +291,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashPrice = 0;
 
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        price += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+        cashPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
 
       let cashOrder = 'Ваше замовлення:\n';
       
@@ -310,7 +310,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashlessPrice = 0;
 
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        price += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+        cashlessPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
 
       let cashlessOrder = 'Ваше замовлення:\n';
       
@@ -319,7 +319,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
                        'Безготівковий розрахунок\n' +
-                       `Вартість: ${cashlessPrice}\n`
+                       `Вартість: ${cashlessPrice} грн\n`
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashlessOrder);
