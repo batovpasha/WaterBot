@@ -288,7 +288,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                            'Перед вашим числом має стояти слеш "/"');
       
     case '/cashPayment':
-      let price = 0;
+      let cashPrice = 0;
 
       for (let i = 0; i < ORDER['bottle'].length; i++)
         price += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
@@ -300,13 +300,18 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
                    'Оплата готівкою\n' +
-                   `Вартість: ${price} грн` +
+                   `Вартість: ${cashPrice} грн\n` +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashOrder);
       break;     
 
     case '/cashlessPayment':
+      let cashlessPrice = 0;
+
+      for (let i = 0; i < ORDER['bottle'].length; i++)
+        price += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+
       let cashlessOrder = 'Ваше замовлення:\n';
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
@@ -314,6 +319,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
                        'Безготівковий розрахунок\n' +
+                       `Вартість: ${cashlessPrice}\n`
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashlessOrder);
