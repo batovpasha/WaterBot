@@ -215,10 +215,9 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
 });
 
 bot.onTextMessage(/<.*>/, (message, response) => {
-  if (ORDER['address'])
-    return;
+  if (ORDER['address']) return;
   
-  ORDER['address'] = message.text.match(/[^"].*[^"]/).join(''); // value without ""
+  ORDER['address'] = message.text.match(/[^<].*[^>]/).join(''); // value without ""
     
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
