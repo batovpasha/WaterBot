@@ -12,6 +12,13 @@ const http = require('http');
 const port = process.env.PORT || 8080;
 
 const crypto = require('crypto'); 
+const request = require('request');
+
+const options = {
+  uri: 'https://chatapi.viber.com/pa/get_user_details',
+  method: 'POST',
+  json: {}
+};
 
 const createLogger = () => {
   const logger = new winston.Logger({
@@ -351,6 +358,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Замовлення очищене!\n'
                          + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
+    
+    case '/запрос':
+      request(options, (err, res, body) => {
+        say(response, body);
+      })
   }
 
   if (message.text[0] !== '/' && message.text[0] !== '<')
