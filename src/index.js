@@ -214,7 +214,7 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
                      + 'Приклад: <вул. Бажана, 42, кв. 20>');
 });
 
-bot.onTextMessage(/<.*>/, (message, response) => {
+bot.onTextMessage(/\<.*\>/, (message, response) => {
   if (ORDER['address']) return;
   
   ORDER['address'] = message.text.match(/[^<].*[^>]/).join(''); // value without ""
