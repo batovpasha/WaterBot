@@ -214,10 +214,10 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
                      + 'Приклад: <вул. Бажана, 42, кв. 20>');
 });
 
-bot.onTextMessage(/(.*)/, (message, response) => {
+bot.onTextMessage(/<.*>/, (message, response) => {
   if (ORDER['address']) return;
   
-  ORDER['address'] = message.text.match(/[^(].*[^)]/).join(''); // value without ""
+  ORDER['address'] = message.text.match(/[^<].*[^>)]/).join(''); // value without ""
     
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
@@ -353,7 +353,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
   }
 
-  if (message.text[0] !== '/' && message.text[0] !== '"')
+  if (message.text[0] !== '/' && message.text[0] !== '<')
     return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
                        + 'Введіть "/скинути", аби очистити введені дані про замовлення\n'
                        + 'Прайс-лист:\n'
