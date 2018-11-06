@@ -12,8 +12,6 @@ const toYAML  = require('winston-console-formatter');
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const crypto = require('crypto'); 
-
 const createLogger = () => {
   const logger = new winston.Logger({
     level: "debug"
@@ -181,8 +179,6 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-// const hash = data => crypto.createHash('sha1').update(data).digest('hex');
-
 const say = (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
@@ -324,7 +320,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                        `Будь ласка, перейдіть за посиланням та оплатіть замовлення\n ` +
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      return say(response, cashlessOrder);
+      say(response, cashlessOrder);
+
+      const cashlessOrderForUrl = cashlessOrder.split(' ').join('%20');
+
+      return response.send(new UrlMessage(`https://api.fondy.eu/api/checkout?button=%7B"merchant_id"%3A1415599%2C"currency"%3A"UAH"%2C"fields"%3A%5B%7B"name"%3A"id-adpgQ8AFYf"%2C"label"%3A"Коментар%20до%20замовлення%3A"%2C"valid"%3A"max_length%3A1000%3B"%7D%5D%2C"params"%3A%7B"response_url"%3A"%7Bresponse_url%7D"%2C"lang"%3A"uk"%2C"order_desc"%3A"${cashlessOrderForUrl}"%7D%2C"amount"%3A"${cashlessPrice}"%2C"amount_readonly"%3Atrue%7D`));
       break;
 
     case '/ок':
