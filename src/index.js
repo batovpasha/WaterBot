@@ -361,7 +361,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     
     case '/запрос':
       request(options, (err, res, body) => {
-        say(response, response.userProfile);
+        say(response, JSON.stringify(response.userProfile));
       })
   }
 
