@@ -4,6 +4,7 @@ const ViberBot        = require('viber-bot').Bot;
 const BotEvents       = require('viber-bot').Events;
 const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
+const UrlMessage      = require('viber-bot').Message.Url;
 
 const winston = require('winston');
 const toYAML  = require('winston-console-formatter');
@@ -317,9 +318,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashlessOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
 
-      cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
-                       'Безготівковий розрахунок\n' +
-                       `Вартість: ${cashlessPrice} грн\n`
+      cashlessOrder += `Адреса доставки: ${ORDER['address']}\n ` +
+                       'Безготівковий розрахунок\n ' +
+                       `Вартість: ${cashlessPrice} грн\n ` +
+                       `Будь ласка, перейдіть за посиланням та оплатіть замовлення\n ` +
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
       return say(response, cashlessOrder);
