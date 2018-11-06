@@ -4,13 +4,21 @@ const ViberBot        = require('viber-bot').Bot;
 const BotEvents       = require('viber-bot').Events;
 const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
-const UrlMessage      = require('viber-bot').Message.Url;
 
 const winston = require('winston');
 const toYAML  = require('winston-console-formatter');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
+
+const crypto = require('crypto'); 
+const request = require('request');
+
+const options = {
+  uri: 'https://chatapi.viber.com/pa/get_user_details',
+  method: 'POST',
+  json: {}
+};
 
 const createLogger = () => {
   const logger = new winston.Logger({
@@ -319,13 +327,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n` +
                        'Безготівковий розрахунок\n' +
                        `Вартість: ${cashlessPrice} грн\n`
-                       `Будь ласка, перейдіть за посиланням та оплатіть замовлення`
                        'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      say(response, cashlessOrder);
-
-      return response.send(new )
-
+      return say(response, cashlessOrder);
       break;
 
     case '/ок':
@@ -354,7 +358,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Замовлення очищене!\n'
                          + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
-
+    
+    case '/запрос':
+      request(options, (err, res, body) => {
+        say(response, JSON.stringify(response.userProfile));
+      })
   }
 
   if (message.text[0] !== '/' && message.text[0] !== '<')
