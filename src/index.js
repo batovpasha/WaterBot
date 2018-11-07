@@ -179,29 +179,6 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-let PAY_KEYBOARD = { 
-  'Type': 'keyboard',
-  'InputFieldState': 'hidden',
-	'Buttons': [
-		{
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Оплатити',
-			'ActionType': 'open-url',
-			'ActionBody': ''
-    },
-    {
-			'Columns': 6,
-			'Rows': 1,
-			'BgColor': '#e6f5ff',
-      'Text': 'Скасувати',
-			'ActionType': 'reply',
-			'ActionBody': '/cancel'
-		}
-	]
-};
-
 const say = (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
@@ -244,10 +221,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   switch (message.text) {  
     case '/замовити':
       return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-      break;
-
-    case '/оплатити': 
-      return response.send(new KeyboardMessage(PAY_KEYBOARD))
       break;
 
     case '/makeOrder':
