@@ -248,6 +248,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
       break;
 
+    case '/оплатити': 
+      return response.send(new KeyboardMessage(PAY_KEYBOARD))
+      break;
+
     case '/makeOrder':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
@@ -306,6 +310,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/manualInput':
       return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
                            'Перед вашим числом має стояти слеш "/"');
+      break;
       
     case '/cashPayment':
       let cashPrice = 0;
@@ -352,17 +357,16 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
     case '/ок':
       return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+      break;
 
     case '/confirm':
       return say(response, 'Дякуємо за замовлення!\n' +
                            'Ми зв\'яжемося з Вами у найближчий час');
-    
-    case '/оплатити': 
-      return response.send(new KeyboardMessage(PAY_KEYBOARD));
       break;
     
     case '/асортимент':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      break;
     
     case '/cancel':
       ORDER['bottle'] = [];
