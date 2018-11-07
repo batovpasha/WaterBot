@@ -357,6 +357,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       return say(response, 'Дякуємо за замовлення!\n' +
                            'Ми зв\'яжемося з Вами у найближчий час');
     
+    case '/оплатити': 
+      return response.send(new KeyboardMessage(PAY_KEYBOARD));
+      break;
+    
     case '/асортимент':
       return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
     
@@ -377,10 +381,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                          + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
     
-    case '/оплатити': 
-      return response.send(new KeyboardMessage(PAY_KEYBOARD));
-      break;
-  }
+    }
 
   if (message.text[0] !== '/' && message.text[0] !== '<')
     return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
