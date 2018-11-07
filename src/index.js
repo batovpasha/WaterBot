@@ -342,16 +342,14 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n ` +
                        'Безготівковий розрахунок\n ' +
-                       `Вартість: ${cashlessPrice} грн\n ` +
-                       'Будь ласка, перейдіть за посиланням та оплатіть товар';
-    
-                       
-      const cashlessOrderForUrl = cashlessOrder.split(' ').join('%20');
-                       
-      // PAY_KEYBOARD['Buttons'][0]['ActionBody'] = `https://api.fondy.eu/api/checkout?button=%7B"merchant_id"%3A1415599%2C"currency"%3A"UAH"%2C"fields"%3A%5B%7B"name"%3A"id-adpgQ8AFYf"%2C"label"%3A"Коментар%20до%20замовлення%3A"%2C"valid"%3A"max_length%3A1000%3B"%7D%5D%2C"params"%3A%7B"response_url"%3A"%7Bresponse_url%7D"%2C"lang"%3A"uk"%2C"order_desc"%3A""%7D%2C"amount"%3A"${cashlessPrice.toString()}"%2C"amount_readonly"%3Atrue%7D`;
+                       `Вартість: ${cashlessPrice} грн`; 
                        
       say(response, cashlessOrder);
-      say(response, `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%22%3A1415599%2C%22currency%22%3A%22UAH%22%2C%22fields%22%3A%5B%7B%22name%22%3A%22id-95iJMmbgTm%22%2C%22label%22%3A%22%D0%9D%D0%BE%D0%BC%D0%B5%D1%80%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D0%B0%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-LCGvTNvXn7%22%2C%22label%22%3A%22%D0%A4%D0%98%D0%9E%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-adpgQ8AFYf%22%2C%22label%22%3A%22%D0%9A%D0%BE%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%20%D0%B4%D0%BE%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F%3A%22%2C%22valid%22%3A%22max_length%3A1000%3B%22%7D%5D%2C%22params%22%3A%7B%22response_url%22%3A%22%7Bresponse_url%7D%22%2C%22lang%22%3A%22uk%22%2C%22order_desc%22%3A%22%D0%A1%D0%BF%D0%BB%D0%B0%D1%82%D0%B0%20%D0%B7%D0%B0%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D0%B8%22%7D%2C%22amount%22%3A%22${cashlessPrice.toString()}%22%2C%22amount_readonly%22%3Atrue%7D`);
+                       
+      const cashlessOrderForUrl = cashlessOrder.split(' ').join('%20');
+      
+      say(response, 'Будь ласка, перейдіть за посиланням та оплатіть замовлення');
+      say(response, `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%22%3A1415599%2C%22currency%22%3A%22UAH%22%2C%22fields%22%3A%5B%7B%22name%22%3A%22id-95iJMmbgTm%22%2C%22label%22%3A%22%D0%9D%D0%BE%D0%BC%D0%B5%D1%80%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D0%B0%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-LCGvTNvXn7%22%2C%22label%22%3A%22%D0%A4%D0%98%D0%9E%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-adpgQ8AFYf%22%2C%22label%22%3A%22%D0%9A%D0%BE%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%20%D0%B4%D0%BE%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F%3A%22%2C%22valid%22%3A%22max_length%3A1000%3B%22%7D%5D%2C%22params%22%3A%7B%22response_url%22%3A%22%7Bresponse_url%7D%22%2C%22lang%22%3A%22uk%22%2C%22order_desc%22%3A%22${cashlessOrderForUrl.toString()}%22%7D%2C%22amount%22%3A%22${cashlessPrice.toString()}%22%2C%22amount_readonly%22%3Atrue%7D`);
       say(response, 'Введіть "/ок" для підтвердження або скасування замовлення');
       
       break;
