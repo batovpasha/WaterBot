@@ -377,7 +377,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                          + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
     
-    case '/оплатит': 
+    case '/оплатити': 
       return response.send(new KeyboardMessage(PAY_KEYBOARD));
       break;
   }
