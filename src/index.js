@@ -4,13 +4,19 @@ const ViberBot        = require('viber-bot').Bot;
 const BotEvents       = require('viber-bot').Events;
 const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
-const UrlMessage      = require('viber-bot').Message.Url;
-
+const AgileCRMManager = require("./agilecrm.js");
+    
 const winston = require('winston');
 const toYAML  = require('winston-console-formatter');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
+
+const obj = new AgileCRMManager("kryobot", "fg278s43dvfvdpacttptspi0f8", "nsulimenkons@z-digital.net");
+
+const success = data => data;
+    
+const error = data => data;
 
 const createLogger = () => {
   const logger = new winston.Logger({
@@ -218,6 +224,12 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
+  let cashPrice = 0;
+  let cashlessPrice = 0;
+
+  let cashOrder = 'Ваше замовлення:\n';
+  let cashlessOrder = 'Ваше замовлення:\n';
+
   switch (message.text) {  
     case '/замовити':
       return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
@@ -284,13 +296,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
       
     case '/cashPayment':
-      let cashPrice = 0;
-
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
 
-      let cashOrder = 'Ваше замовлення:\n';
-      
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
 
@@ -303,12 +311,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;     
 
     case '/cashlessPayment':
-      let cashlessPrice = 0;
-
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashlessPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
-
-      let cashlessOrder = 'Ваше замовлення:\n';
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashlessOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
@@ -332,6 +336,20 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/confirm':
+      const deal = {
+        "name": response.userProfile.name,
+        "expected_value": cashPrice ? cashPrice.toString() : cashlessPrice.toString(),
+        "probability": "100",
+        "close_date": 1455042600,
+        "milestone": "progress",
+        "contact_ids": [
+            "5674823384563712"
+        ],
+        "description": cashlessOrder.length > cashOrder.length ? cashlessOrder : cashOrder
+      };
+
+      obj.contactAPI.createDeal(deal, success, error);
+
       return say(response, 'Дякуємо за замовлення!\n' +
                            'Ми зв\'яжемося з Вами у найближчий час');
       break;
