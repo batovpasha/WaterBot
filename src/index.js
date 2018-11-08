@@ -338,7 +338,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/confirm':
       const deal = {
         "name": response.userProfile.name,
-        "expected_value": cashPrice ? cashPrice : cashlessPrice,
+        "expected_value": cashPrice !== 0 ? cashPrice.toString() : cashlessPrice.toString(),
         "probability": "100",
         "close_date": 1455042600,
         "milestone": "progress",
