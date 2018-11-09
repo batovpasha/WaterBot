@@ -351,7 +351,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       obj.contactAPI.createDeal(deal, success, error);
 
       say(response, 'Дякуємо за замовлення!\n' +
-                    'Ми зв\'яжемося з Вами у найближчий час');
+                    `Ми зв\'яжемося з Вами у найближчий час ${cashlessPrice.toString()}`);
       break;
     
     case '/асортимент':
