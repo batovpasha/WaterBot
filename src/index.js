@@ -187,24 +187,6 @@ const CONFIRM_KEYBOARD = {
 
 const say = (response, message) => response.send(new TextMessage(message));
 
-const makeRequestToCRM = (orderText, orderPrice, response) => {
-  return () => {
-    const deal = {
-      "name": response.userProfile.name,
-      "expected_value": orderPrice.toString(),
-      "probability": "100",
-      "close_date": 1455042600,
-      "milestone": "progress",
-      "contact_ids": [
-          "5630121163620352"
-      ],
-      "description": orderText
-    };
-
-    obj.contactAPI.createDeal(deal, success, error);
-  }
-};
-
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.\n` +
@@ -324,9 +306,21 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                    'Оплата готівкою\n' +
                    `Вартість: ${cashPrice} грн\n` +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
-
-      fnToCallForCashPayment = makeRequestToCRM(cashOrder, cashPrice, response);
-            
+      
+      const cashDeal = {
+        "name": response.userProfile.name,
+        "expected_value": cashPrice.toString(),
+        "probability": "100",
+        "close_date": 1455042600,
+        "milestone": "progress",
+        "contact_ids": [
+          "5630121163620352"
+        ],
+        "description": cashOrder
+      };
+                  
+      obj.contactAPI.createDeal(cashDeal, success, error);                 
+      
       say(response, cashOrder);
       break;     
 
@@ -343,9 +337,21 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       cashlessOrder += `Адреса доставки: ${ORDER['address']}\n ` +
                        'Безготівковий розрахунок\n ' +
                        `Вартість: ${cashlessPrice} грн`; 
-                       
-      fnToCallForCashlessPayment = makeRequestToCRM(cashlessOrder, cashlessPrice, response);
-      
+
+      const cashlessDeal = {
+        "name": response.userProfile.name,
+        "expected_value": cashlessPrice.toString(),
+        "probability": "100",
+        "close_date": 1455042600,
+        "milestone": "progress",
+        "contact_ids": [
+          "5630121163620352"
+        ],
+        "description": cashlessOrder
+      };
+                  
+      obj.contactAPI.createDeal(cashlessDeal, success, error);                 
+
       say(response, cashlessOrder);
                        
       const cashlessOrderForUrl = cashlessOrder.split(' ').join('-').split('\n').join('-').split(':').join('-');
@@ -361,8 +367,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/confirm':
-      fnToCallForCashlessPayment();
-
       say(response, 'Дякуємо за замовлення!\n' +
                     'Ми зв\'яжемося з Вами у найближчий час');
       break;
