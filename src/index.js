@@ -304,8 +304,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       cashOrder += `Адреса доставки: ${ORDER['address']}\n` +
                    'Оплата готівкою\n' +
-                   `Вартість: ${cashPrice} грн\n` +
-                   'Введіть "/ок" для підтвердження або скасування замовлення';
+                   `Вартість: ${cashPrice} грн`;
       
       const cashDeal = {
         "name": response.userProfile.name,
@@ -322,6 +321,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       obj.contactAPI.createDeal(cashDeal, success, error);                 
       
       say(response, cashOrder);
+      say(response, 'Введіть "/ок" для підтвердження або скасування замовлення');
       break;     
 
     case '/cashlessPayment':
