@@ -232,29 +232,29 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
   switch (message.text) {  
     case '/замовити':
-      return response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
+      response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
       break;
 
     case '/makeOrder':
-      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
 
     case '/firstBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[0]);
   
-      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/secondBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[1]);
     
-      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/thirdBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[2]);
   
-      return response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
+      response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/oneToOrder':
@@ -263,9 +263,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
                   + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
       
-      return say(response, 'Якщо бажаєте продовжити,\n'  
-                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                         + 'Приклад: <вул. Бажана, 42, кв. 20>');
+      say(response, 'Якщо бажаєте продовжити,\n'  
+                  + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                  + 'Приклад: <вул. Бажана, 42, кв. 20>');
       break;
   
     case '/twoToOrder':
@@ -274,9 +274,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
                   + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
       
-      return say(response, 'Якщо бажаєте продовжити,\n'  
-                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                         + 'Приклад: <вул. Бажана, 42, кв. 20>');
+      say(response, 'Якщо бажаєте продовжити,\n'  
+                  + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                  + 'Приклад: <вул. Бажана, 42, кв. 20>');
       break;
   
     case '/fiveToOrder':
@@ -285,14 +285,14 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
                   + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
       
-      return say(response, 'Якщо бажаєте продовжити,\n'  
-                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                         + 'Приклад: <вул. Бажана, 42, кв. 20>');
+      say(response, 'Якщо бажаєте продовжити,\n'  
+                  + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                  + 'Приклад: <вул. Бажана, 42, кв. 20>');
       break;
   
     case '/manualInput':
-      return say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
-                           'Перед вашим числом має стояти слеш "/"');
+      say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
+                    'Перед вашим числом має стояти слеш "/"');
       break;
       
     case '/cashPayment':
@@ -307,7 +307,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                    `Вартість: ${cashPrice} грн\n` +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      return say(response, cashOrder);
+      say(response, cashOrder);
       break;     
 
     case '/cashlessPayment':
@@ -332,7 +332,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/ок':
-      return response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
+      response.send(new KeyboardMessage(CONFIRM_KEYBOARD));
       break;
 
     case '/confirm':
@@ -350,12 +350,12 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
       obj.contactAPI.createDeal(deal, success, error);
 
-      return say(response, 'Дякуємо за замовлення!\n' +
-                           'Ми зв\'яжемося з Вами у найближчий час');
+      say(response, 'Дякуємо за замовлення!\n' +
+                    'Ми зв\'яжемося з Вами у найближчий час');
       break;
     
     case '/асортимент':
-      return response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
+      response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
     
     case '/cancel':
@@ -363,7 +363,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       ORDER['quantity'] = [];
       ORDER['address'] = '';
 
-      return say(response, 'Гарного дня!');
+      say(response, 'Гарного дня!');
       break;
 
     case '/скинути':
@@ -371,8 +371,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       ORDER['quantity'] = [];
       ORDER['address'] = '';
 
-      return say(response, 'Замовлення очищене!\n'
-                         + 'Введіть "/замовити", аби сформувати нове замовлення');
+      say(response, 'Замовлення очищене!\n'
+                  + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
     
     }
