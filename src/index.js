@@ -361,8 +361,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/confirm':
-      if (fnToCallForCashPayment) fnToCallForCashPayment();
-      else fnToCallForCashlessPayment();
+      fnToCallForCashlessPayment();
 
       say(response, 'Дякуємо за замовлення!\n' +
                     'Ми зв\'яжемося з Вами у найближчий час');
