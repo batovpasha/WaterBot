@@ -187,7 +187,7 @@ const CONFIRM_KEYBOARD = {
 
 const say = (response, message) => response.send(new TextMessage(message));
 
-const makeRequestToCRM = (orderText, orderPrice) => {
+const makeRequestToCRM = (orderText, orderPrice, response) => {
   return () => {
     const deal = {
       "name": response.userProfile.name,
@@ -325,7 +325,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                    `Вартість: ${cashPrice} грн\n` +
                    'Введіть "/ок" для підтвердження або скасування замовлення';
 
-      fnToCallForCashPayment = makeRequestToCRM(cashlessOrder, cashPrice);
+      fnToCallForCashPayment = makeRequestToCRM(cashOrder, cashPrice, response);
             
       say(response, cashOrder);
       break;     
@@ -344,7 +344,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                        'Безготівковий розрахунок\n ' +
                        `Вартість: ${cashlessPrice} грн`; 
                        
-      fnToCallForCashlessPayment = makeRequestToCRM(cashlessOrder, cashPrice);
+      fnToCallForCashlessPayment = makeRequestToCRM(cashlessOrder, cashlessPrice, response);
       
       say(response, cashlessOrder);
                        
