@@ -12,7 +12,7 @@ const toYAML  = require('winston-console-formatter');
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const obj = new AgileCRMManager("kryobot", "fg278s43dvfvdpacttptspi0f8", "nsulimenkons@z-digital.net");
+const obj = new AgileCRMManager("kryo-bot", "7676j5j565a3i64133b0ejn8rq", "ns@z-digital.net");
 
 const success = data => data;
     
@@ -338,14 +338,14 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/confirm':
       const deal = {
         "name": response.userProfile.name,
-        "expected_value": cashPrice !== 0 ? cashPrice.toString() : cashlessPrice.toString(),
+        "expected_value": cashlessPrice.toString(),
         "probability": "100",
         "close_date": 1455042600,
         "milestone": "progress",
         "contact_ids": [
-            "5674823384563712"
+            "5630121163620352"
         ],
-        "description": cashlessOrder.length > cashOrder.length ? cashlessOrder : cashOrder
+        "description": cashlessOrder
       };
 
       obj.contactAPI.createDeal(deal, success, error);
