@@ -4,15 +4,16 @@ const ViberBot        = require('viber-bot').Bot;
 const BotEvents       = require('viber-bot').Events;
 const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
-const AgileCRMManager = require("./agilecrm.js");
-    
+const AgileCRMManager = require('./agilecrm.js');
+const auth            = require('../authorization.js');
+
 const winston = require('winston');
 const toYAML  = require('winston-console-formatter');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const obj = new AgileCRMManager("kryo-bot", "7676j5j565a3i64133b0ejn8rq", "ns@z-digital.net");
+const obj = new AgileCRMManager('kryo-bot', auth.key, auth.mail);
 
 const success = data => data;
     
@@ -31,7 +32,7 @@ const createLogger = () => {
 const logger = createLogger();
 
 const bot = new ViberBot(logger, {
-  authToken: '489504805567d0e4-fc4db6f42aca801e-5071919865b61d88',
+  authToken: auth.token,
   name: 'KryoBot',
   avatar: '' // use default avatar
 });
@@ -223,9 +224,8 @@ bot.onTextMessage(/<.*>/, (message, response) => {
   return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {  
-  let fnToCallForCashPayment;
-  let fnToCallForCashlessPayment;
+bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
+  let post;
   
   switch (message.text) {  
     case '/замовити':
@@ -392,7 +392,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                   + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
     
-    }
+    case '/admin 98765':
+      response.send('Створити пост до публічного чату, введіть текст:');
+      
+      break;  
+  }
 
   if (message.text[0] !== '/' && message.text[0] !== '<')
     return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
