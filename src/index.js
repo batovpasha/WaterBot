@@ -5,7 +5,6 @@ const BotEvents       = require('viber-bot').Events;
 const TextMessage     = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
 const AgileCRMManager = require('./agilecrm.js');
-const auth            = require('../authorization.js');
 
 const winston = require('winston');
 const toYAML  = require('winston-console-formatter');
