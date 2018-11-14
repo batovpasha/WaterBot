@@ -13,7 +13,7 @@ const toYAML  = require('winston-console-formatter');
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const obj = new AgileCRMManager('kryo-bot', auth.key, auth.mail);
+const obj = new AgileCRMManager('kryo-bot', '7676j5j565a3i64133b0ejn8rq', 'ns@z-digital.net');
 
 const success = data => data;
     
@@ -32,7 +32,7 @@ const createLogger = () => {
 const logger = createLogger();
 
 const bot = new ViberBot(logger, {
-  authToken: auth.token,
+  authToken: '489504805567d0e4-fc4db6f42aca801e-5071919865b61d88',
   name: 'KryoBot',
   avatar: '' // use default avatar
 });
