@@ -12,7 +12,9 @@ const toYAML  = require('winston-console-formatter');
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const obj = new AgileCRMManager('kryo-bot', '7676j5j565a3i64133b0ejn8rq', 'ns@z-digital.net');
+const obj = new AgileCRMManager('kryo-bot', 
+                                '7676j5j565a3i64133b0ejn8rq',
+                                'ns@z-digital.net');
 
 const success = data => data;
     
@@ -46,8 +48,7 @@ const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л ПЕТ',   // associated with k
                               'Бутиль 20л метал', 
                               'Пляшка 1л ПЕТ' ];
 
-const PRICE_LIST = 
-{
+const PRICE_LIST = {
   'Бутиль 20л ПЕТ': 125,
   'Бутиль 20л метал': 160,
   'Пляшка 1л ПЕТ': 20
