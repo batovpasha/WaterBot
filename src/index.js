@@ -1,13 +1,13 @@
 'use strict';
 
-const ViberBot        = require('viber-bot').Bot;
-const BotEvents       = require('viber-bot').Events;
-const TextMessage     = require('viber-bot').Message.Text;
+const ViberBot = require('viber-bot').Bot;
+const BotEvents = require('viber-bot').Events;
+const TextMessage = require('viber-bot').Message.Text;
 const KeyboardMessage = require('viber-bot').Message.Keyboard;
 const AgileCRMManager = require('./agilecrm.js');
 
 const winston = require('winston');
-const toYAML  = require('winston-console-formatter');
+const toYAML = require('winston-console-formatter');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
@@ -44,9 +44,11 @@ const ORDER = {
   address: ''
 };
 
-const ASSORTMENT_OF_GOODS = [ 'Бутиль 20л ПЕТ',   // associated with keyboard buttons by index 
-                              'Бутиль 20л метал', 
-                              'Пляшка 1л ПЕТ' ];
+const ASSORTMENT_OF_GOODS = [ // associated with keyboard buttons by index 
+  'Бутиль 20л ПЕТ',     
+  'Бутиль 20л метал', 
+  'Пляшка 1л ПЕТ' 
+];
 
 const PRICE_LIST = {
   'Бутиль 20л ПЕТ': 125,
@@ -186,7 +188,9 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-const say = (response, message) => response.send(new TextMessage(message));
+const say = (response, message) => {
+  return new Promise(() => response.send(new TextMessage(message)));
+};
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
@@ -209,13 +213,13 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
  
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
   ORDER['quantity'].push(parseInt(message.text.match(/[^/].*/).join(''))); // number without '/'
-
+  
   say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
-              + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
-
-  say(response, 'Якщо бажаєте продовжити,\n'  
-                     + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                     + 'Приклад: <вул. Бажана, 42, кв. 20>');
+              + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
+    
+    .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
+                            + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                            + 'Приклад: <вул. Бажана, 42, кв. 20>'));
 });
 
 bot.onTextMessage(/<.*>/, (message, response) => {  
