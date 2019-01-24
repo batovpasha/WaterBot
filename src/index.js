@@ -190,7 +190,7 @@ const CONFIRM_KEYBOARD = {
 
 const say = (response, message) => {
   return new Promise((resolve) => {
-    response.send(new TextMessage(message));
+    await response.send(new TextMessage(message));
     resolve();
   });
 };
