@@ -186,7 +186,7 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-const say = async (response, message) => response.send(new TextMessage(message));
+const say = (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
@@ -210,10 +210,10 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
   ORDER['quantity'].push(parseInt(message.text.match(/[^/].*/).join(''))); // number without '/'
 
-  await say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+  say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
               + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
 
-  await say(response, 'Якщо бажаєте продовжити,\n'  
+  say(response, 'Якщо бажаєте продовжити,\n'  
                      + 'вкажіть адресу доставки у трикутних дужках <>\n'
                      + 'Приклад: <вул. Бажана, 42, кв. 20>');
 });
