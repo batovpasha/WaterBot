@@ -322,8 +322,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                   
       obj.contactAPI.createDeal(cashDeal, success, error);                 
       
-      say(response, cashOrder);
-      say(response, 'Введіть "/ок" для підтвердження або скасування замовлення');
+      say(response, cashOrder)
+        .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
       break;     
 
     case '/cashlessPayment':
