@@ -223,7 +223,7 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
 bot.onTextMessage(/<.*>/, (message, response) => {  
   ORDER['address'] = message.text.match(/[^<].*[^>)]/).join(''); // value without ""
     
-  return response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
+  response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
@@ -358,10 +358,21 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                        
       const cashlessOrderForUrl = cashlessOrder.split(' ').join('-').split('\n').join('-').split(':').join('-');
     
+      const url = `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%22%3A1415599%2C%22currency
+                   %22%3A%22UAH%22%2C%22fields%22%3A%5B%7B%22name%22%3A%22id-95iJMmbgTm%22%2C%22label%22
+                   %3A%22%D0%9D%D0%BE%D0%BC%D0%B5%D1%80%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D0%
+                   B0%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-LCGvTNvXn7%22%2C%22la
+                   bel%22%3A%22%D0%A4%D0%98%D0%9E%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3
+                   A%22id-adpgQ8AFYf%22%2C%22label%22%3A%22%D0%9A%D0%BE%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1
+                   %80%20%D0%B4%D0%BE%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F%3A%
+                   22%2C%22valid%22%3A%22max_length%3A1000%3B%22%7D%5D%2C%22params%22%3A%7B%22response_u
+                   rl%22%3A%22%7Bresponse_url%7D%22%2C%22lang%22%3A%22uk%22%2C%22order_desc%22%3A%22
+                   ${cashlessOrderForUrl.toString()}%22%7D%2C%22amount%22%3A%22${cashlessPrice.toString()}
+                   %22%2C%22amount_readonly%22%3Atrue%7D`;
+
       say(response, 'Будь ласка, перейдіть за посиланням та оплатіть замовлення');
-      say(response, `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%22%3A1415599%2C%22currency%22%3A%22UAH%22%2C%22fields%22%3A%5B%7B%22name%22%3A%22id-95iJMmbgTm%22%2C%22label%22%3A%22%D0%9D%D0%BE%D0%BC%D0%B5%D1%80%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D0%B0%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-LCGvTNvXn7%22%2C%22label%22%3A%22%D0%A4%D0%98%D0%9E%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-adpgQ8AFYf%22%2C%22label%22%3A%22%D0%9A%D0%BE%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%20%D0%B4%D0%BE%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F%3A%22%2C%22valid%22%3A%22max_length%3A1000%3B%22%7D%5D%2C%22params%22%3A%7B%22response_url%22%3A%22%7Bresponse_url%7D%22%2C%22lang%22%3A%22uk%22%2C%22order_desc%22%3A%22${cashlessOrderForUrl.toString()}%22%7D%2C%22amount%22%3A%22${cashlessPrice.toString()}%22%2C%22amount_readonly%22%3Atrue%7D`);
+      say(response, url);
       say(response, 'Введіть "/ок" для підтвердження або скасування замовлення');
-      
       break;
 
     case '/ок':
