@@ -188,12 +188,7 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-const say = (response, message) => {
-  return new Promise((resolve) => {
-    await response.send(new TextMessage(message));
-    resolve();
-  });
-};
+const say = (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
