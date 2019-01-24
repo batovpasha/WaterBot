@@ -189,7 +189,10 @@ const CONFIRM_KEYBOARD = {
 };
 
 const say = (response, message) => {
-  return new Promise(() => response.send(new TextMessage(message)));
+  return new Promise((resolve) => {
+    response.send(new TextMessage(message));
+    resolve();
+  });
 };
 
 bot.onSubscribe(response => {
