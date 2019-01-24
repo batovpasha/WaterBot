@@ -190,6 +190,15 @@ const CONFIRM_KEYBOARD = {
 
 const say = (response, message) => response.send(new TextMessage(message));
 
+const returnToAssortment = () => {
+    say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+              + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
+    
+    .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
+                            + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                            + 'Приклад: <вул. Бажана, 42, кв. 20>'));
+};
+
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
                 `Я ${bot.name}! Я допоможу вам зробити замовлення.\n` +
@@ -259,12 +268,13 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'].push(1);
 
-      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
-                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
+      // say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+      //             + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
       
-      say(response, 'Якщо бажаєте продовжити,\n'  
-                  + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                  + 'Приклад: <вул. Бажана, 42, кв. 20>');
+      // say(response, 'Якщо бажаєте продовжити,\n'  
+      //             + 'вкажіть адресу доставки у трикутних дужках <>\n'
+      //             + 'Приклад: <вул. Бажана, 42, кв. 20>');
+      returnToAssortment();
       break;
   
     case '/twoToOrder':
