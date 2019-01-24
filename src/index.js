@@ -186,7 +186,7 @@ const CONFIRM_KEYBOARD = {
 	]
 };
 
-const say = (response, message) => response.send(new TextMessage(message));
+const say = async (response, message) => response.send(new TextMessage(message));
 
 bot.onSubscribe(response => {
   say(response, `Привіт, ${response.userProfile.name}.` +  
@@ -210,10 +210,10 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
 bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
   ORDER['quantity'].push(parseInt(message.text.match(/[^/].*/).join(''))); // number without '/'
 
-  say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+  await say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
               + 'аби додати ще щось до свого замовлення введіть "/асортимент"');
 
-  return say(response, 'Якщо бажаєте продовжити,\n'  
+  await say(response, 'Якщо бажаєте продовжити,\n'  
                      + 'вкажіть адресу доставки у трикутних дужках <>\n'
                      + 'Приклад: <вул. Бажана, 42, кв. 20>');
 });
@@ -391,12 +391,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, 'Замовлення очищене!\n'
                   + 'Введіть "/замовити", аби сформувати нове замовлення');
       break;
-    
-    case '/admin 98765':
-      response.send('Створити пост до публічного чату, введіть текст:');
-      
-      break;  
-  }
+}
 
   if (message.text[0] !== '/' && message.text[0] !== '<')
     return say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
