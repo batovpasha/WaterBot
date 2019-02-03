@@ -82,7 +82,6 @@ bot.onTextMessage(/\/[1-9][0-9]*/, (message, response) => {
 
 bot.onTextMessage(/<.*>/, (message, response) => {  
   ORDER['address'] = message.text.match(/[^<].*[^>)]/).join(''); // value without ""
-    
   response.send(new KeyboardMessage(PAYMENT_METHOD_KEYBOARD));
 });
 
@@ -117,8 +116,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   
     case '/oneToOrder':
       ORDER['quantity'].push(1);
-
-                      
       say(response, firstIfText).then(() => say(response, secondIfText));
       break;
   
@@ -248,7 +245,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       ORDER['address'] = '';
 
       say(response, 'Замовлення очищене!\n'
-                  + 'Введіть "/замовити", аби сформувати нове замовлення');
+                  + 'Введіть будь-що, аби сформувати нове замовлення');
       break;
 }
 
