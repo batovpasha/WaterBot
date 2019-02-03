@@ -170,7 +170,22 @@ const STARTING_KEYBOARD = {
 	  'ActionBody': '/clear'
 	}
   ]	
-}
+};
+
+const BACK_TO_ORDER_KEYBOARD = {
+	'Type': 'keyboard',
+  'InputFieldState': 'hidden',
+  'Buttons': [
+    {
+	  'Columns': 6,
+	  'Rows': 1,
+	  'BgColor': '#e6f5ff',
+	  'Text': 'До асортименту',
+	  'ActionType': 'reply',
+	  'ActionBody': '/assortment'
+	}
+  ]	
+};
 
 module.exports = {
   ORDER,
@@ -181,6 +196,7 @@ module.exports = {
   QUANTITY_TO_ORDER_KEYBOARD,
   PAYMENT_METHOD_KEYBOARD,
 	CONFIRM_KEYBOARD,
-	STARTING_KEYBOARD
+	STARTING_KEYBOARD,
+  BACK_TO_ORDER_KEYBOARD 
 };
   

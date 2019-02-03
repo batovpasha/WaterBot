@@ -18,6 +18,7 @@ const QUANTITY_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').QUANTI
 const PAYMENT_METHOD_KEYBOARD = require('./keyboardsAndDataArrays.js').PAYMENT_METHOD_KEYBOARD;
 const CONFIRM_KEYBOARD = require('./keyboardsAndDataArrays.js').CONFIRM_KEYBOARD;
 const STARTING_KEYBOARD = require('./keyboardsAndDataArrays').STARTING_KEYBOARD;
+const BACK_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays').BACK_TO_ORDER_KEYBOARD;
 
 const http = require('http');
 const port = process.env.PORT || 8080;
@@ -86,11 +87,7 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
-  const firstIfText = 'Якщо бажаєте повернутися до асортименту,\n' 
-                    + 'аби додати ще щось до свого замовлення введіть' 
-                    + ' "/асортимент"';
-
-  const secondIfText = 'Якщо бажаєте продовжити,\n'  
+  const IfText = 'Якщо бажаєте продовжити,\n'  
                      + 'вкажіть адресу доставки у трикутних дужках <>\n'
                      + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
  
@@ -116,17 +113,23 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   
     case '/oneToOrder':
       ORDER['quantity'].push(1);
-      say(response, firstIfText).then(() => say(response, secondIfText));
+
+      say(response, IfText)
+        .then(() => response.send(new KeyboardMessage(BACK_TO_ORDER_KEYBOARD)));
       break;
   
     case '/twoToOrder':
       ORDER['quantity'].push(2);
-      say(response, firstIfText).then(() => say(response, secondIfText));
+
+      say(response, IfText)
+        .then(() => response.send(new KeyboardMessage(BACK_TO_ORDER_KEYBOARD)));
       break;
   
     case '/fiveToOrder':
       ORDER['quantity'].push(5);
-      say(response, firstIfText).then(() => say(response, secondIfText));
+
+      say(response, IfText)
+        .then(() => response.send(new KeyboardMessage(BACK_TO_ORDER_KEYBOARD)));
       break;
  
     case '/manualInput':
@@ -227,7 +230,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                     'Ми зв\'яжемося з Вами у найближчий час');
       break;
     
-    case '/асортимент':
+    case '/assortment':
       response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;
     
