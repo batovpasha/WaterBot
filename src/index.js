@@ -17,6 +17,7 @@ const ORDER_MENU_KEYBOARD = require('./keyboardsAndDataArrays.js').ORDER_MENU_KE
 const QUANTITY_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').QUANTITY_TO_ORDER_KEYBOARD;
 const PAYMENT_METHOD_KEYBOARD = require('./keyboardsAndDataArrays.js').PAYMENT_METHOD_KEYBOARD;
 const CONFIRM_KEYBOARD = require('./keyboardsAndDataArrays.js').CONFIRM_KEYBOARD;
+const STARTING_KEYBOARD = require('./keyboardsAndDataArrays').STARTING_KEYBOARD;
 
 const http = require('http');
 const port = process.env.PORT || 8080;
@@ -86,10 +87,8 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
-  let post;
-  
   switch (message.text) {  
-    case '/замовити':
+    case '/order':
       response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
       break;
 
@@ -99,19 +98,16 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
     case '/firstBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[0]);
-  
       response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/secondBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[1]);
-    
       response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
     case '/thirdBottleFromAssortment':
       ORDER['bottle'].push(ASSORTMENT_OF_GOODS[2]);
-  
       response.send(new KeyboardMessage(QUANTITY_TO_ORDER_KEYBOARD));
       break;
   
@@ -149,7 +145,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashOrder = 'Ваше замовлення:\n';
   
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        cashPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+        cashPrice += PRICE_LIST[ORDER['bottle'][i]]
+                   * parseInt(ORDER['quantity'][i]);
 
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
@@ -181,7 +178,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashlessOrder = 'Ваше замовлення:\n';
   
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        cashlessPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
+        cashlessPrice += PRICE_LIST[ORDER['bottle'][i]] 
+                       * parseInt(ORDER['quantity'][i]);
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashlessOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
@@ -247,7 +245,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, 'Гарного дня!');
       break;
 
-    case '/скинути':
+    case '/clear':
       ORDER['bottle'] = [];
       ORDER['quantity'] = [];
       ORDER['address'] = '';
@@ -257,13 +255,15 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 }
 
-  if (message.text[0] !== '/' && message.text[0] !== '<')
-    say(response, 'Введіть "/замовити", аби сформувати замовлення\n'
-                + 'Введіть "/скинути", аби очистити введені дані про замовлення\n'
-                + 'Прайс-лист:\n'
-                + 'Бутиль 20л ПЕТ - 125 грн\n'
-                + 'Бутиль 20л метал - 160 грн\n'
-                + 'Пляшка 1л ПЕТ - 20 грн');
+  if (message.text[0] !== '/' && message.text[0] !== '<') {
+    const priceList = 'Прайс-лист:\n'
+                    + 'Бутиль 20л ПЕТ - 125 грн\n'
+                    + 'Бутиль 20л метал - 160 грн\n'
+                    + 'Пляшка 1л ПЕТ - 20 грн';
+    
+    say(response, priceList)
+      .then(() => response.send(new KeyboardMessage(STARTING_KEYBOARD)));
+  }
 });
 
 http.createServer(bot.middleware())

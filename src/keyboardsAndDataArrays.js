@@ -149,6 +149,29 @@ const CONFIRM_KEYBOARD = {
   ]
 };
 
+const STARTING_KEYBOARD = {
+	'Type': 'keyboard',
+  'InputFieldState': 'hidden',
+  'Buttons': [
+    {
+	  'Columns': 6,
+	  'Rows': 1,
+	  'BgColor': '#e6f5ff',
+	  'Text': 'Замовити',
+	  'ActionType': 'reply',
+	  'ActionBody': '/order'
+	},
+	{
+	  'Columns': 6,
+	  'Rows': 1,
+	  'BgColor': '#e6f5ff',
+	  'Text': 'Скинути введені дані',
+	  'ActionType': 'reply',
+	  'ActionBody': '/clear'
+	}
+  ]	
+}
+
 module.exports = {
   ORDER,
   ASSORTMENT_OF_GOODS,
@@ -157,6 +180,7 @@ module.exports = {
   ORDER_MENU_KEYBOARD,
   QUANTITY_TO_ORDER_KEYBOARD,
   PAYMENT_METHOD_KEYBOARD,
-  CONFIRM_KEYBOARD
+	CONFIRM_KEYBOARD,
+	STARTING_KEYBOARD
 };
   
