@@ -118,12 +118,15 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'].push(1);
 
-      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
-                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
+      const firstIfText = 'Якщо бажаєте повернутися до асортименту,\n' 
+                        + 'аби додати ще щось до свого замовлення введіть' 
+                        + ' "/асортимент"';
 
-        .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
-                                + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                                + 'Приклад: <вул. Бажана, 42, кв. 20>'));
+      const secondIfText = 'Якщо бажаєте продовжити,\n'  
+                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                         + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
+                       
+      say(response, firstIfText).then(() => say(response, secondIfText));
       break;
   
     case '/twoToOrder':
