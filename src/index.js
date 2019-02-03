@@ -88,8 +88,8 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
   const IfText = 'Якщо бажаєте продовжити,\n'  
-                     + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                     + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
+               + 'вкажіть адресу доставки у трикутних дужках <>\n'
+               + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
  
   switch (message.text) {  
     case '/makeOrder':
@@ -221,7 +221,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       say(response, cashlessOrder)
         .then(() => say(response, 'Будь ласка, перейдіть за посиланням та оплатіть замовлення'))
         .then(() => say(response, url))
-        .then(() => say(response, 'Введіть "/ок" для підтвердження або скасування замовлення'))
         .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
       break;
 
