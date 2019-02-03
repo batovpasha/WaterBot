@@ -131,13 +131,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   
     case '/twoToOrder':
       ORDER['quantity'].push(2);
-
-      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
-                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
-    
-        .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
-                                + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                                + 'Приклад: <вул. Бажана, 42, кв. 20>'));
+      say(response, firstIfText).then(() => say(response, secondIfText));
       break;
   
     case '/fiveToOrder':
