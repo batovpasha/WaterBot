@@ -12,7 +12,6 @@ const toYAML = require('winston-console-formatter');
 const ORDER = require('./keyboardsAndDataArrays.js').ORDER;
 const ASSORTMENT_OF_GOODS = require('./keyboardsAndDataArrays.js').ASSORTMENT_OF_GOODS;
 const PRICE_LIST = require('./keyboardsAndDataArrays.js').PRICE_LIST;
-const TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').TO_ORDER_KEYBOARD;
 const ORDER_MENU_KEYBOARD = require('./keyboardsAndDataArrays.js').ORDER_MENU_KEYBOARD;
 const QUANTITY_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').QUANTITY_TO_ORDER_KEYBOARD;
 const PAYMENT_METHOD_KEYBOARD = require('./keyboardsAndDataArrays.js').PAYMENT_METHOD_KEYBOARD;

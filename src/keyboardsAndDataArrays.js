@@ -18,21 +18,6 @@ const PRICE_LIST = {
   'Пляшка 1л ПЕТ': 20
 };
   
-const TO_ORDER_KEYBOARD = { // keyboard with button for making order
-  'Type': 'keyboard',
-  'InputFieldState': 'hidden',
-  'Buttons': [
-     {
-	   'Columns': 6,
-	   'Rows': 1,
-	   'BgColor': '#e6f5ff',
-	   'Text': 'Замовити',
-	   'ActionType': 'reply',
-	   'ActionBody': '/makeOrder'
-	}
-  ]
-};
-  
 const ORDER_MENU_KEYBOARD = {
   'Type': 'keyboard',
   'InputFieldState': 'hidden',
@@ -191,7 +176,6 @@ module.exports = {
   ORDER,
   ASSORTMENT_OF_GOODS,
   PRICE_LIST,
-  TO_ORDER_KEYBOARD,
   ORDER_MENU_KEYBOARD,
   QUANTITY_TO_ORDER_KEYBOARD,
   PAYMENT_METHOD_KEYBOARD,
