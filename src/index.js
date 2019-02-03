@@ -17,7 +17,6 @@ const ORDER_MENU_KEYBOARD = require('./keyboardsAndDataArrays.js').ORDER_MENU_KE
 const QUANTITY_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').QUANTITY_TO_ORDER_KEYBOARD;
 const PAYMENT_METHOD_KEYBOARD = require('./keyboardsAndDataArrays.js').PAYMENT_METHOD_KEYBOARD;
 const CONFIRM_KEYBOARD = require('./keyboardsAndDataArrays.js').CONFIRM_KEYBOARD;
-const URL = require('./keyboardsAndDataArrays').URL;
 
 const http = require('http');
 const port = process.env.PORT || 8080;
@@ -87,6 +86,8 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
+  let post;
+  
   switch (message.text) {  
     case '/замовити':
       response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
@@ -117,27 +118,36 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'].push(1);
 
-      const firstIfText = 'Якщо бажаєте повернутися до асортименту,\n' 
-                        + 'аби додати ще щось до свого замовлення введіть' 
-                        + ' "/асортимент"';
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
 
-      const secondIfText = 'Якщо бажаєте продовжити,\n'  
-                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                         + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
-                         
-      say(response, firstIfText).then(() => say(response, secondIfText));
+        .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
+                                + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                                + 'Приклад: <вул. Бажана, 42, кв. 20>'));
       break;
   
     case '/twoToOrder':
       ORDER['quantity'].push(2);
-      say(response, firstIfText).then(() => say(response, secondIfText));
+
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
+    
+        .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
+                                + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                                + 'Приклад: <вул. Бажана, 42, кв. 20>'));
       break;
   
     case '/fiveToOrder':
       ORDER['quantity'].push(5);
-      say(response, firstIfText).then(() => say(response, secondIfText));
+
+      say(response, 'Якщо бажаєте повернутися до асортименту,\n'   
+                  + 'аби додати ще щось до свого замовлення введіть "/асортимент"')
+
+        .then(() => say(response, 'Якщо бажаєте продовжити,\n'  
+                                + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                                + 'Приклад: <вул. Бажана, 42, кв. 20>'));
       break;
- 
+  
     case '/manualInput':
       say(response, 'Будь ласка, введіть бажану кількість товару\n' + 
                     'Перед вашим числом має стояти слеш "/"');
@@ -148,8 +158,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashOrder = 'Ваше замовлення:\n';
   
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        cashPrice += PRICE_LIST[ORDER['bottle'][i]]
-                   * parseInt(ORDER['quantity'][i]);
+        cashPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
 
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
@@ -181,8 +190,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       let cashlessOrder = 'Ваше замовлення:\n';
   
       for (let i = 0; i < ORDER['bottle'].length; i++)
-        cashlessPrice += PRICE_LIST[ORDER['bottle'][i]]
-                       * parseInt(ORDER['quantity'][i]);
+        cashlessPrice += PRICE_LIST[ORDER['bottle'][i]] * parseInt(ORDER['quantity'][i]);
       
       for (let i = 0; i < ORDER['bottle'].length; i++)
         cashlessOrder += `${ORDER['bottle'][i]}, ${ORDER['quantity'][i]} шт.\n`
@@ -208,9 +216,11 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       const cashlessOrderForUrl = cashlessOrder.split(' ').join('-').split('\n')
                                                .join('-').split(':').join('-');
       
+      const url = `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%22%3A1415599%2C%22currency%22%3A%22UAH%22%2C%22fields%22%3A%5B%7B%22name%22%3A%22id-95iJMmbgTm%22%2C%22label%22%3A%22%D0%9D%D0%BE%D0%BC%D0%B5%D1%80%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D0%B0%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-LCGvTNvXn7%22%2C%22label%22%3A%22%D0%A4%D0%98%D0%9E%22%2C%22valid%22%3A%22required%22%7D%2C%7B%22name%22%3A%22id-adpgQ8AFYf%22%2C%22label%22%3A%22%D0%9A%D0%BE%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%20%D0%B4%D0%BE%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F%3A%22%2C%22valid%22%3A%22max_length%3A1000%3B%22%7D%5D%2C%22params%22%3A%7B%22response_url%22%3A%22%7Bresponse_url%7D%22%2C%22lang%22%3A%22uk%22%2C%22order_desc%22%3A%22${cashlessOrderForUrl.toString()}%22%7D%2C%22amount%22%3A%22${cashlessPrice.toString()}%22%2C%22amount_readonly%22%3Atrue%7D`;
+      
       say(response, cashlessOrder)
         .then(() => say(response, 'Будь ласка, перейдіть за посиланням та оплатіть замовлення'))
-        .then(() => say(response, URL))
+        .then(() => say(response, url))
         .then(() => say(response, 'Введіть "/ок" для підтвердження або скасування замовлення'))
         .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
       break;
