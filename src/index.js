@@ -88,10 +88,6 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
   switch (message.text) {  
-    case '/order':
-      response.send(new KeyboardMessage(TO_ORDER_KEYBOARD));
-      break;
-
     case '/makeOrder':
       response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
       break;

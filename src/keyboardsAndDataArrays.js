@@ -159,7 +159,7 @@ const STARTING_KEYBOARD = {
 	  'BgColor': '#e6f5ff',
 	  'Text': 'Замовити',
 	  'ActionType': 'reply',
-	  'ActionBody': '/order'
+	  'ActionBody': '/makeOrder'
 	},
 	{
 	  'Columns': 6,
