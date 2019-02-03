@@ -87,6 +87,14 @@ bot.onTextMessage(/<.*>/, (message, response) => {
 });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {    
+  const firstIfText = 'Якщо бажаєте повернутися до асортименту,\n' 
+                    + 'аби додати ще щось до свого замовлення введіть' 
+                    + ' "/асортимент"';
+
+  const secondIfText = 'Якщо бажаєте продовжити,\n'  
+                     + 'вкажіть адресу доставки у трикутних дужках <>\n'
+                     + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
+ 
   switch (message.text) {  
     case '/makeOrder':
       response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
@@ -110,14 +118,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
     case '/oneToOrder':
       ORDER['quantity'].push(1);
 
-      const firstIfText = 'Якщо бажаєте повернутися до асортименту,\n' 
-                        + 'аби додати ще щось до свого замовлення введіть' 
-                        + ' "/асортимент"';
-
-      const secondIfText = 'Якщо бажаєте продовжити,\n'  
-                         + 'вкажіть адресу доставки у трикутних дужках <>\n'
-                         + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
-                       
+                      
       say(response, firstIfText).then(() => say(response, secondIfText));
       break;
   
