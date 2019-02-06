@@ -28,10 +28,9 @@ const CRM_EMAIL = require('./keyboardsAndDataArrays').CRM_EMAIL;
 
 const obj = new AgileCRMManager(DOMAIN, API_KEY, CRM_EMAIL);
 
-const success = data => data;
+const success = data => console.log(data);
+const error = data => console.log(data);
     
-const error = data => data;
-
 const createLogger = () => {
   const logger = new winston.Logger({
     level: "debug"
@@ -163,7 +162,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "description": cashOrder
       };
                   
-      obj.contactAPI.createDeal(cashDeal, success, error);                 
+      obj.contactAPI.createDeal(cashDeal);                 
       
       say(response, cashOrder)
         .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
@@ -198,8 +197,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                   
       obj.contactAPI.createDeal(cashlessDeal, success, error);                 
 
-      const cashlessOrderForUrl = cashlessOrder.split(' ').join('-').split('\n')
-                                               .join('-').split(':').join('-');
+      const cashlessOrderForUrl = cashlessOrder.split(' ').join('-')
+                                               .split('\n').join('-')
+                                               .split(':').join('-');
       
       const url = `https://api.fondy.eu/api/checkout?button=%7B%22merchant_id%2` 
                 + `2%3A1415599%2C%22currency%22%3A%22UAH%22%2C%22fields%22%3A%5`
