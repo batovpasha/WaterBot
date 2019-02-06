@@ -89,6 +89,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                + 'вкажіть адресу доставки у трикутних дужках <>\n'
                + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
  
+  const deal; // object for the request to crm
+               
   switch (message.text) {  
     case '/makeOrder':
       response.send(new KeyboardMessage(ORDER_MENU_KEYBOARD));
@@ -150,7 +152,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                    'Оплата готівкою\n' +
                    `Вартість: ${cashPrice} грн`;
       
-      const cashDeal = {
+      deal = {
         "name": response.userProfile.name,
         "expected_value": cashPrice.toString(),
         "probability": "100",
@@ -162,7 +164,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "description": cashOrder
       };
                   
-      obj.contactAPI.createDeal(cashDeal);                 
+      obj.contactAPI.createDeal(deal, success, error);                 
       
       say(response, cashOrder)
         .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
@@ -183,7 +185,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                        'Безготівковий розрахунок\n ' +
                        `Вартість: ${cashlessPrice} грн`; 
 
-      const cashlessDeal = {
+      deal = {
         "name": response.userProfile.name,
         "expected_value": cashlessPrice.toString(),
         "probability": "100",
@@ -195,7 +197,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "description": cashlessOrder
       };
                   
-      obj.contactAPI.createDeal(cashlessDeal, success, error);                 
+      obj.contactAPI.createDeal(deal, success, error);                 
 
       const cashlessOrderForUrl = cashlessOrder.split(' ').join('-')
                                                .split('\n').join('-')
