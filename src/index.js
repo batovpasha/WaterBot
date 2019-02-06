@@ -226,9 +226,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
       break;
 
     case '/confirm':
-      obj.contactAPI.createDeal(deal, success, error);                 
-      say(response, 'Дякуємо за замовлення!\n' +
-                    'Ми зв\'яжемося з Вами у найближчий час');
+      obj.contactAPI.createDeal(deal, success, error)
+        .then(() => say(response, 'Дякуємо за замовлення!\n' +
+                                  'Ми зв\'яжемося з Вами у найближчий час'));
+      
       break;
     
     case '/assortment':
