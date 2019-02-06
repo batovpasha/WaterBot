@@ -89,7 +89,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
                + 'вкажіть адресу доставки у трикутних дужках <>\n'
                + 'Приклад: <вул. Бажана, 42, кв. 20>';                  
  
-  const deal; // object for the request to crm
+  let deal; // object for the request to crm
                
   switch (message.text) {  
     case '/makeOrder':
