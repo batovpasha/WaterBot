@@ -158,7 +158,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "close_date": 1455042600,
         "milestone": "progress",
         "contact_ids": [
-          "5630121163620352"
+          "5712088936742912"
         ],
         "description": cashOrder
       };
@@ -191,7 +191,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "close_date": 1455042600,
         "milestone": "progress",
         "contact_ids": [
-          "5630121163620352"
+          "5712088936742912"
         ],
         "description": cashlessOrder
       };
