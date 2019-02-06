@@ -164,7 +164,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "description": cashOrder
       };
                   
-      obj.contactAPI.createDeal(deal, success, error);                 
+     // obj.contactAPI.createDeal(deal, success, error);                 
       
       say(response, cashOrder)
         .then(() => response.send(new KeyboardMessage(CONFIRM_KEYBOARD)));
@@ -197,7 +197,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         "description": cashlessOrder
       };
                   
-      obj.contactAPI.createDeal(deal, success, error);                 
+     // obj.contactAPI.createDeal(deal, success, error);                 
 
       const cashlessOrderForUrl = cashlessOrder.split(' ').join('-')
                                                .split('\n').join('-')
