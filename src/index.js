@@ -23,7 +23,7 @@ const http = require('http');
 const port = process.env.PORT || 8080;
 
 const DOMAIN = 'kryo';
-const API_KEY = 'stgl0rhncf6bj8tn96pirrbbo4';
+const API_KEY = '36k98ajpqjk4viub1t4procj00';
 const CRM_EMAIL = 'pavel_batov@z-digital.net';  
 
 const obj = new AgileCRMManager(DOMAIN, API_KEY, CRM_EMAIL);
