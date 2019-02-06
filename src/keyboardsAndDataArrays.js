@@ -1,5 +1,9 @@
 'use strict';
 
+const DOMAIN = 'kryo';
+const API_KEY = '36k98ajpqjk4viub1t4procj00';
+const CRM_EMAIL = 'pavel_batov@z-digital.net';
+
 const ORDER = {
   bottle: [],
   quantity: [],
@@ -181,6 +185,9 @@ module.exports = {
   PAYMENT_METHOD_KEYBOARD,
 	CONFIRM_KEYBOARD,
 	STARTING_KEYBOARD,
-  BACK_TO_ORDER_KEYBOARD 
+	BACK_TO_ORDER_KEYBOARD, 
+	DOMAIN,
+	API_KEY,
+  CRM_EMAIL
 };
   

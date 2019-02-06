@@ -22,9 +22,9 @@ const BACK_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays').BACK_TO_ORDER
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const DOMAIN = 'kryo';
-const API_KEY = '36k98ajpqjk4viub1t4procj00';
-const CRM_EMAIL = 'pavel_batov@z-digital.net';  
+const DOMAIN = require('./keyboardsAndDataArrays').DOMAIN;
+const API_KEY = require('./keyboardsAndDataArrays').API_KEY;
+const CRM_EMAIL = require('./keyboardsAndDataArrays').CRM_EMAIL;  
 
 const obj = new AgileCRMManager(DOMAIN, API_KEY, CRM_EMAIL);
 
