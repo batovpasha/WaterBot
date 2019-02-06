@@ -22,9 +22,11 @@ const BACK_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays').BACK_TO_ORDER
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const obj = new AgileCRMManager('kryo-bot', 
-                                '7676j5j565a3i64133b0ejn8rq',
-                                'ns@z-digital.net');
+const DOMAIN = 'kryo';
+const API_KEY = 'stgl0rhncf6bj8tn96pirrbbo4';
+const CRM_EMAIL = 'pavel_batov@z-digital.net';  
+
+const obj = new AgileCRMManager(DOMAIN, API_KEY, CRM_EMAIL);
 
 const success = data => data;
     
@@ -34,9 +36,7 @@ const createLogger = () => {
   const logger = new winston.Logger({
     level: "debug"
   });
-
   logger.add(winston.transports.Console, toYAML.config());
-  
   return logger;
 };
 
