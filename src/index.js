@@ -9,22 +9,26 @@ const AgileCRMManager = require('./agilecrm.js');
 const winston = require('winston');
 const toYAML = require('winston-console-formatter');
 
-const ORDER = require('./keyboardsAndDataArrays.js').ORDER;
-const ASSORTMENT_OF_GOODS = require('./keyboardsAndDataArrays.js').ASSORTMENT_OF_GOODS;
-const PRICE_LIST = require('./keyboardsAndDataArrays.js').PRICE_LIST;
-const ORDER_MENU_KEYBOARD = require('./keyboardsAndDataArrays.js').ORDER_MENU_KEYBOARD;
-const QUANTITY_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays.js').QUANTITY_TO_ORDER_KEYBOARD;
-const PAYMENT_METHOD_KEYBOARD = require('./keyboardsAndDataArrays.js').PAYMENT_METHOD_KEYBOARD;
-const CONFIRM_KEYBOARD = require('./keyboardsAndDataArrays.js').CONFIRM_KEYBOARD;
-const STARTING_KEYBOARD = require('./keyboardsAndDataArrays').STARTING_KEYBOARD;
-const BACK_TO_ORDER_KEYBOARD = require('./keyboardsAndDataArrays').BACK_TO_ORDER_KEYBOARD;
+const { 
+  ORDER,
+  ASSORTMENT_OF_GOODS,
+  PRICE_LIST 
+  ORDER_MENU_KEYBOARD,
+  QUANTITY_TO_ORDER_KEYBOARD,
+  PAYMENT_METHOD_KEYBOARD,
+  CONFIRM_KEYBOARD,
+  STARTING_KEYBOARD,
+  BACK_TO_ORDER_KEYBOARD
+} = require('./keyboardsAndDataArrays.js');
 
 const http = require('http');
 const port = process.env.PORT || 8080;
 
-const DOMAIN = require('./keyboardsAndDataArrays').DOMAIN;
-const API_KEY = require('./keyboardsAndDataArrays').API_KEY;
-const CRM_EMAIL = require('./keyboardsAndDataArrays').CRM_EMAIL;  
+const { 
+  DOMAIN,
+  API_KEY,
+  CRM_EMAIL
+} = require('./keyboardsAndDataArrays');
 
 const obj = new AgileCRMManager(DOMAIN, API_KEY, CRM_EMAIL);
 
@@ -264,4 +268,4 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 });
 
 http.createServer(bot.middleware())
-    .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/")); 
+  .listen(port, () => bot.setWebhook("https://kryo-bot.herokuapp.com/")); 
