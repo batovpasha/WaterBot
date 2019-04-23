@@ -1,9 +1,9 @@
 'use strict';
 
-const ViberBot = require('viber-bot').Bot;
-const BotEvents = require('viber-bot').Events;
-const TextMessage = require('viber-bot').Message.Text;
-const KeyboardMessage = require('viber-bot').Message.Keyboard;
+const { Bot: ViberBot } = require('viber-bot');
+const { Events: BotEvents } = require('viber-bot');
+const { Message.Text: TextMessage } = require('viber-bot');
+const { Message.Keyboard: KeyboardMessage } = require('viber-bot');
 const AgileCRMManager = require('./agilecrm.js');
 
 const winston = require('winston');
@@ -46,7 +46,7 @@ const createLogger = () => {
 const logger = createLogger();
 
 const bot = new ViberBot(logger, {
-  authToken: '489504805567d0e4-fc4db6f42aca801e-5071919865b61d88',
+  authToken: 'yourToken',
   name: 'KryoBot',
   avatar: '' // use default avatar
 });

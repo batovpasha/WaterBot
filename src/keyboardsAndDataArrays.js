@@ -1,8 +1,8 @@
 'use strict';
 
 const DOMAIN = 'kryo';
-const API_KEY = '36k98ajpqjk4viub1t4procj00';
-const CRM_EMAIL = 'pavel_batov@z-digital.net';
+const API_KEY = 'yourKey'';
+const CRM_EMAIL = 'yourEmail';
 
 const ORDER = {
   bottle: [],
